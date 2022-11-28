@@ -1,8 +1,11 @@
 # Mirror to GitLab and trigger GitLab CI
 
-A GitHub Action that mirrors all commits to GitLab, triggers GitLab CI, and returns the results back to GitHub.
+A GitHub Action that mirrors all commits to GitLab, triggers GitLab CI,
+and returns the results back to GitHub.
 
-A second action uses active polling to determine whether the GitLab pipeline is finished. This means that GitHub Action will only end after the GitLab CI pipeline finished.
+A second action uses active polling to determine whether the GitLab pipeline
+is finished. This means that GitHub Action will only end
+after the GitLab CI pipeline finished.
 
 ## How to use the Gitlab-CI as a contributor
 
@@ -18,10 +21,12 @@ Steps to be done:
 
 - Create a new empty repository in a Gitlab-Instance.
 - Allow Force-Push on remote protected branches in remote repository.
-  - This can be found in Gitlab in `Settings -> Repository -> Protected branches`
+  - This can be found in Gitlab in
+    `Settings -> Repository -> Protected branches`
 - Create Project Access Token in GitLab,
   so that the GitHub-CI can push to GitLab
-  - This can be found in Gitlab in `Settings -> Access Tokens -> Project Access Tokens`
+  - This can be found in Gitlab in
+    `Settings -> Access Tokens -> Project Access Tokens`
   - Give the token a suited name. This name is publicly readable.
   - Set a role of this token (probably `maintainer`,
                               as force-push needs to be possible)
@@ -62,6 +67,15 @@ This file adds a job that triggers a CI-Pipeline in Gitlab.
 - The following environment-variables can be kept as they are:
   - `FORCE_PUSH` is set to force-push to the Gitlab-Repo, to make sure,
   the Gitlab-Repo stays in sync with the main GitHub-repository.
-  - `GITHUB_TOKEN` is used to authorize internal actions. The secret is set automatically by GitHub.
+  - `GITHUB_TOKEN` is used to authorize internal actions.
+  The secret is set automatically by GitHub.
   - `GITLAB_TOKEN` is used to authorize actions with the Gitlab-repo.
   It uses the secret, that was set above.
+
+
+## Thanks to
+
+- SvanBoxel and his repo gitlab-mirror-and-ci-action
+  for the inspiration of this project.
+- The research-project "HiRSE_PS" founded by BMBF under the grant ""
+  for the network and the financial support of this work.
