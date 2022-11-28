@@ -1,0 +1,30 @@
+name: Mirror and run GitLab CI
+
+on: [push, pull_request_target]
+
+env:
+  GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+  # Repo-URL without https:// at beginning!
+  GITLAB_REPO_URL: "codebase.helmholtz.cloud/j.fritz/github2gitlab_dummy.git"
+  FORCE_PUSH: "true"
+  GITLAB_HOSTNAME: "codebase.helmholtz.cloud"
+  GITLAB_PROJECT_ID: "6234"
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  github2lab:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: pull github2lab_action
+      uses: actions/checkout@v3
+      with:
+        repository: jakob-fritz/gitlab-mirror-and-ci-action
+        ref: non_docker
+        path: github2lab_action
+    - name: Mirror
+      run: |
+        sh ./github2lab_action/mirror.sh
+    - name: Get state of Gitlab-CI
+      run: |
+        sh ./github2lab_action/get_ci_state.sh
