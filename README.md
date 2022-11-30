@@ -71,6 +71,11 @@ This file adds a job that triggers a CI-Pipeline in Gitlab.
   The secret is set automatically by GitHub.
   - `GITLAB_TOKEN` is used to authorize actions with the Gitlab-repo.
   It uses the secret, that was set above.
+- Additionally, other jobs can be run in between the job mirroring the repo to
+  Gitlab and the job querying the status of the Gitlab-CI.
+  See the exemplary job in the file `mirror_wait.yml`.
+  Furthermore, other jobs can also be specified in separate yml-files that can
+  be created in the directory `.github/workflows`.
 
 
 ## Thanks to
