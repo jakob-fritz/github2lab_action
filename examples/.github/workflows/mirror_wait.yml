@@ -25,6 +25,12 @@ jobs:
     - name: Mirror
       run: |
         sh ./github2lab_action/mirror.sh
+    # Add additional jobs here
+    # These take place after mirroring to Gitlab (and starting the CI there)
+    # and retrieving the results from the CI at Gitlab.
+    - name: Additional local job
+      run: |
+        echo "This can be a single or many jobs before querying the result from Gitlab-CI"
     - name: Get state of Gitlab-CI
       run: |
         sh ./github2lab_action/get_ci_state.sh
