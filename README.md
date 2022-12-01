@@ -77,10 +77,9 @@ This file adds a job that triggers a CI-Pipeline in Gitlab.
   Furthermore, other jobs can also be specified in separate yml-files that can
   be created in the directory `.github/workflows`.
 
-
 ## Thanks to
 
-- SvanBoxel and his repo gitlab-mirror-and-ci-action
+- SvanBoxel and his repo [gitlab-mirror-and-ci-action](<https://github.com/SvanBoxel/gitlab-mirror-and-ci-action>)
   for the inspiration of this project.
 - The research-project "HiRSE_PS" founded by BMBF under the grant ""
   for the network and the financial support of this work.
