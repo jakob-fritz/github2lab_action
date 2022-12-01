@@ -91,6 +91,12 @@ that is executed by the CI, check if the code may expose or transmit secrets
 that have been set above.
 If so, the change could be used to gain access to the secret tokens.
 
+## How to contribute to this project supplying the action?
+In case you find an error or a bug in this project,
+feel free to open an issue.
+If you want to fix this error/bug,
+please open a Pull-Request with the code-change.
+
 ## Thanks to
 
 - SvanBoxel and his repo [gitlab-mirror-and-ci-action](<https://github.com/SvanBoxel/gitlab-mirror-and-ci-action>)
