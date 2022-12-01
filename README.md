@@ -105,6 +105,10 @@ please open a Pull-Request with the code-change.
 
 ## Thanks to
 
-- [SvanBoxel](https://github.com/SvanBoxel) and his repo [gitlab-mirror-and-ci-action](<https://github.com/SvanBoxel/gitlab-mirror-and-ci-action>)
-  for the inspiration of this project.
-- The "Helmholtz Platform for Research Software Engineering - Preparatory Study" ([HiRSE_PS](https://www.helmholtz-hirse.de/)), funded by the [Innovation Fund](https://www.helmholtz.de/en/transfer/helmholtz-association-transfer-instruments/innovation-fund-of-the-helmholtz-centers/) of the [Helmholtz Association](https://www.helmholtz.de/en/).
+- [SvanBoxel](<https://github.com/SvanBoxel>)
+and his repo [gitlab-mirror-and-ci-action](<https://github.com/SvanBoxel/gitlab-mirror-and-ci-action>)
+for the inspiration of this project.
+- The "Helmholtz Platform for Research Software Engineering - Preparatory Study"
+([HiRSE_PS](<https://www.helmholtz-hirse.de/>)),
+funded by the [Innovation Fund](<https://www.helmholtz.de/en/transfer/helmholtz-association-transfer-instruments/innovation-fund-of-the-helmholtz-centers/>)
+of the [Helmholtz Association](<https://www.helmholtz.de/en/>).
