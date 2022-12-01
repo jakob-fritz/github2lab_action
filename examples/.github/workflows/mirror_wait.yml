@@ -23,7 +23,7 @@ jobs:
     - name: pull github2lab_action
       uses: actions/checkout@v3
       with:
-        repository: jakob-fritz/gitlab-mirror-and-ci-action
+        repository: jakob-fritz/github2lab_action
         ref: non_docker
         path: github2lab_action
     - name: Mirror
