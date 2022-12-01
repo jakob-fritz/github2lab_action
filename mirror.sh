@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# SPDX-FileCopyrightText: 2022 Jakob Fritz <j.fritz@fz-juelich.de>
+#
+# SPDX-License-Identifier: MIT
+
 set -u
 
 # Define what branches and tags, etc to fetch and to push

@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2022 Jakob Fritz <j.fritz@fz-juelich.de>
+
+SPDX-License-Identifier: MIT
+-->
+
 # Mirror to GitLab and trigger GitLab CI
 
 A GitHub Action that mirrors all commits to GitLab, triggers GitLab CI,
