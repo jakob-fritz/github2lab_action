@@ -7,6 +7,12 @@ A second action uses active polling to determine whether the GitLab pipeline
 is finished. This means that GitHub Action will only end
 after the GitLab CI pipeline finished.
 
+This whole approach also works for pull-requests.
+Then, the credentials of the maintainer are used.
+These are stored in Github-Secrets.
+Therefore, they are not directly accessible to others, but given enough intent,
+they can be extracted when the code of the CI is adapted accordingly.
+
 ## How to use the Gitlab-CI as a contributor
 
 Nothing special. Just contribute to the project as you regularly do
@@ -76,6 +82,14 @@ This file adds a job that triggers a CI-Pipeline in Gitlab.
   See the exemplary job in the file `mirror_wait.yml`.
   Furthermore, other jobs can also be specified in separate yml-files that can
   be created in the directory `.github/workflows`.
+
+### How to use with Pull-Requests
+
+When external contributors hand in pull-requests, the CI has to be accepted
+by a maintainer of the project. In case the Pull-Requests changes code
+that is executed by the CI, check if the code may expose or transmit secrets
+that have been set above.
+If so, the change could be used to gain access to the secret tokens.
 
 ## Thanks to
 
