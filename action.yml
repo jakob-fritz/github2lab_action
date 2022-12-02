@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2022 Jakob Fritz <j.fritz@fz-juelich.de>
+#
+# SPDX-License-Identifier: CC0-1.0
+
 name: 'Github2lab'
 description: 'Mirroring a repo to gitlab to use the gitlab-ci'
 inputs:
