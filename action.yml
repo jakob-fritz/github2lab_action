@@ -1,0 +1,26 @@
+name: 'Github2lab'
+description: 'Mirroring a repo to gitlab to use the gitlab-ci'
+inputs:
+  GITLAB_TOKEN:  # id of input
+    description: 'set to "secrets.GITLAB_TOKEN"'
+    required: true
+    default: 'World'
+  FORCE_PUSH:  # id of input
+    description: 'Defaults to true, set to false if no force-push to gitlab shall be done'
+    required: false
+    default: "true"
+  GITLAB_HOSTNAME:  # id of input
+    description: 'The hostname of the gitlab-instance (without https://)'
+    required: true
+    default: 'codebase.helmholtz.cloud'
+  GITLAB_PROJECT_ID:  # id of input
+    description: 'The ID of your project in Gitlab'
+    required: true
+    default: '1234'
+runs:
+  using: "composite"
+  steps:
+    - run: mirror.sh
+      shell: bash
+    - run: get_ci_state.sh
+      shell: bash
