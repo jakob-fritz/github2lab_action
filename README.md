@@ -71,9 +71,6 @@ This file adds a job that triggers a CI-Pipeline in Gitlab.
 - Edit the environment-variables in the file to match your project
   - `GITLAB_HOSTNAME` needs to be the base of the Gitlab-Instance.
   E.g. `codebase.helmholtz.cloud` without https:// in front
-  - `GITLAB_REPO_URL` also needs to be without https://,
-  but contains the full path of the git-file,
-  e.g. `codebase.helmholtz.cloud/j.fritz/github2gitlab_dummy.git`.
   - Set "`GITLAB_PROJECT_ID` to the repository-id
   that can be found in the main page of the repository (named "Project ID")
 - The following environment-variables can be kept as they are:
