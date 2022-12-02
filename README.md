@@ -98,6 +98,7 @@ that have been set above.
 If so, the change could be used to gain access to the secret tokens.
 
 ## How to contribute to this project supplying the action?
+
 In case you find an error or a bug in this project,
 feel free to open an issue.
 If you want to fix this error/bug,
