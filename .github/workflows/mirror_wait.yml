@@ -18,15 +18,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: pull github2lab_action
-      uses: actions/checkout@v3
-      with:
-        repository: jakob-fritz/github2lab_action
-        ref: main
-        path: github2lab_action
     - name: Mirror
       run: |
-        sh ./github2lab_action/mirror.sh
+        sh ./mirror.sh
     # Add additional jobs here
     # These take place after mirroring to Gitlab (and starting the CI there)
     # and retrieving the results from the CI at Gitlab.
@@ -35,4 +29,4 @@ jobs:
         echo "This can be a single or many jobs before querying the result from Gitlab-CI"
     - name: Get state of Gitlab-CI
       run: |
-        sh ./github2lab_action/get_ci_state.sh
+        sh ./get_ci_state.sh
