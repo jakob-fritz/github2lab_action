@@ -24,7 +24,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         repository: jakob-fritz/github2lab_action
-        ref: non_docker
+        ref: main
         path: github2lab_action
     - name: Mirror
       run: |
