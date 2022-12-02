@@ -1,0 +1,11 @@
+# SPDX-FileCopyrightText: 2022 Jakob Fritz <j.fritz@fz-juelich.de>
+#
+# SPDX-License-Identifier: MIT
+
+Testing params:
+  stage: test
+  script:
+    - echo "Hello World"
+    - echo "$CI_COMMIT_SHA"
+    - echo "$CI_COMMIT_BRANCH"
+    - echo "$CI_MERGE_REQUEST_IID"
