@@ -15,3 +15,23 @@ jobs:
       uses: avto-dev/markdown-lint@v1
       with:
         args: './README.md'
+  ShellCheck:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install shellcheck
+      run: |
+        apt install shellcheck
+    - name: Run shellcheck
+      run: |
+        shellcheck *.sh
+  CheckBashisms:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install checkbashisms
+      run: |
+        apt install checkbashisms
+    - name: Run checkbashisms
+      run: |
+        checkbashisms *.sh
