@@ -1,0 +1,17 @@
+# SPDX-FileCopyrightText: 2022 Jakob Fritz <j.fritz@fz-juelich.de>
+#
+# SPDX-License-Identifier: MIT
+
+name: Linting
+
+on: [push, pull_request]
+
+jobs:
+  Linting:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Lint markdown file
+      uses: avto-dev/markdown-lint@v1
+      with:
+        args: './README.md'
