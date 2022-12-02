@@ -31,7 +31,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: Install checkbashisms
       run: |
-        sudo apt install checkbashisms
+        sudo apt install devscripts
     - name: Run checkbashisms
       run: |
         checkbashisms *.sh
