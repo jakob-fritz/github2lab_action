@@ -7,7 +7,7 @@ name: Linting
 on: [push, pull_request]
 
 jobs:
-  Linting:
+  MarkdownLinting:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
