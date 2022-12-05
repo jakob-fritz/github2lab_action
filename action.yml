@@ -29,5 +29,11 @@ runs:
   steps:
     - run: sh ./mirror.sh
       shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+        GITLAB_TOKEN: ${{ inputs.GITLAB_TOKEN }}
+        FORCE_PUSH: ${{ inputs.FORCE_PUSH }}
+        GITLAB_HOSTNAME: ${{ inputs.GITLAB_HOSTNAME }}
+        GITLAB_PROJECT_ID: ${{ inputs.GITLAB_PROJECT_ID }}
     - run: sh ./get_ci_state.sh
       shell: bash
