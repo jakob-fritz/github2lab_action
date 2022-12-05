@@ -6,9 +6,6 @@ name: Mirror and run GitLab CI
 
 on: [push, pull_request_target]
 
-env:
-  branch: $GITHUB_REF_NAME
-
 jobs:
   github2lab:
     runs-on: ubuntu-latest
@@ -18,7 +15,7 @@ jobs:
         echo "Last Commit is $GITHUB_SHA on $GITHUB_REF_NAME"
         echo "Last Commit is $GITHUB_SHA on $branch"
     - name: Mirror
-      uses: jakob-fritz/github2lab_action@$branch
+      uses: jakob-fritz/github2lab_action@Iss8_create_action
       env:
         GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
         FORCE_PUSH: "true"
