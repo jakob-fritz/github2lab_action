@@ -7,7 +7,7 @@ name: Linting
 on: [push, pull_request]
 
 jobs:
-  Linting:
+  MarkdownLinting:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -15,3 +15,23 @@ jobs:
       uses: avto-dev/markdown-lint@v1
       with:
         args: './README.md'
+  ShellCheck:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install shellcheck
+      run: |
+        sudo apt install shellcheck
+    - name: Run shellcheck
+      run: |
+        shellcheck *.sh
+  CheckBashisms:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install checkbashisms
+      run: |
+        sudo apt install devscripts
+    - name: Run checkbashisms
+      run: |
+        checkbashisms *.sh

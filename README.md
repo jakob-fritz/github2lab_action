@@ -9,9 +9,9 @@ SPDX-License-Identifier: MIT
 A GitHub Action that mirrors all commits to GitLab, triggers GitLab CI,
 and returns the results back to GitHub.
 
-A second action uses active polling to determine whether the GitLab pipeline
-is finished. This means that GitHub Action will only end
-after the GitLab CI pipeline finished.
+Directly afterwards, a second action uses active polling to determine
+whether the GitLab pipeline is finished. This means that GitHub Action
+will only end after the GitLab CI pipeline finished.
 
 This whole approach also works for pull-requests.
 Then, the credentials of the maintainer are used.
@@ -80,11 +80,6 @@ This file adds a job that triggers a CI-Pipeline in Gitlab.
   The secret is set automatically by GitHub.
   - `GITLAB_TOKEN` is used to authorize actions with the Gitlab-repo.
   It uses the secret, that was set above.
-- Additionally, other jobs can be run in between the job mirroring the repo to
-  Gitlab and the job querying the status of the Gitlab-CI.
-  See the exemplary job in the file `mirror_wait.yml`.
-  Furthermore, other jobs can also be specified in separate yml-files that can
-  be created in the directory `.github/workflows`.
 
 ### How to use with Pull-Requests
 
