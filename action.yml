@@ -8,7 +8,18 @@ description: 'Mirroring a repo to gitlab to use the gitlab-ci'
 runs:
   using: "composite"
   steps:
+    - run: echo "Mode is unknown. It must be 'mirror', 'get_status', or 'both'. Not '$MODE'"
+      shell: bash
+      if: ${{ MODE != "mirror" && MODE != "get_status" && MODE != "both" }}
     - run: sh ./mirror.sh
       shell: bash
+      if: ${{ MODE == "mirror" || MODE == "both" }}
     - run: sh ./get_ci_state.sh
       shell: bash
+      if: ${{ MODE == "get_status" || MODE == "both" }}
+
+
+# Add variable that can be "mirror", "get_status", or "both" to determine what to do
+# Then, only perform that task depending on the variable
+# Raise error if value not one of the above
+
