@@ -66,4 +66,6 @@ elif [ "$ci_status" = "failed" ]
 then
   curl -d '{"state":"failure", "target_url": "'"${ci_web_url}"'", "context": "gitlab-ci"}' -H "Authorization: token ${GITHUB_TOKEN}"  -H "Accept: application/vnd.github+json" -X POST --silent "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}"  > /dev/null
   exit 1
+else
+  exit 1
 fi
