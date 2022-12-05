@@ -21,6 +21,9 @@ inputs:
     description: 'The ID of your project in Gitlab'
     required: true
     default: '1234'
+  GITHUB_TOKEN:  # id of input
+    description: 'The token to authorize to the GITHUB-API (set to secrets.GITHUB_TOKEN)'
+    required: true
 runs:
   using: "composite"
   steps:
