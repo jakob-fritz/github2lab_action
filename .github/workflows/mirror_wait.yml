@@ -38,8 +38,8 @@ jobs:
         GITLAB_HOSTNAME: "codebase.helmholtz.cloud"
         GITLAB_PROJECT_ID: "6627"
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Send incorrect mode
-      uses: ./
-      env:
-        MODE: "other"    
+    # - name: Send incorrect mode
+    #   uses: ./
+    #   env:
+    #     MODE: "other"    
 
