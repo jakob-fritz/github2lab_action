@@ -31,4 +31,6 @@ else
   # If pushing without "force" creates merge-conflicts, the push is aborted
   sh -c "git push --prune gitlab $branch"
 fi
+# Report, that pushing is done and add newline afterwards for formatting
 echo "Done pushing git-repo to https://${GITLAB_REPO_URL}"
+echo ""
