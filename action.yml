@@ -12,13 +12,14 @@ runs:
         echo "Mode is unknown. It must be 'mirror', 'get_status', or 'both'. Not '$MODE'"
         exit 1
       shell: bash
-      if:  (env.mode != 'mirror') && (env.mode != 'get_status') && (env.mode != 'both')
+      if:  ($MODE != 'mirror') && ($MODE != 'get_status') && ($MODE != 'both')
+      # if:  contains(['mirror', 'get_status', 'both'], $MODE)
     - run: sh ./mirror.sh
       shell: bash
-      if: (env.mode == 'mirror') || (env.mode == 'both')
+      if: ($MODE == 'mirror') || ($MODE == 'both')
     - run: sh ./get_ci_state.sh
       shell: bash
-      if: (env.mode == 'get_status') || (env.mode == 'both')
+      if: ($MODE == 'get_status') || ($MODE == 'both')
 
 
 # Add variable that can be "mirror", "get_status", or "both" to determine what to do
