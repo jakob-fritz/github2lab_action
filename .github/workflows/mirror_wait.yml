@@ -11,9 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - run: |
-        echo "Last Commit is $GITHUB_SHA on $GITHUB_REF_NAME"
-        echo "Last Commit is $GITHUB_SHA on $branch"
     - name: Mirror
       uses: jakob-fritz/github2lab_action@Iss8_create_action
       env:
