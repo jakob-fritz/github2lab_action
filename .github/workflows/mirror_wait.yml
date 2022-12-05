@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Mirror
-      uses: jakob-fritz/github2lab_action@${{ GITHUB_SHA }}
+      uses: jakob-fritz/github2lab_action@$GITHUB_SHA
       env:
         GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
         FORCE_PUSH: "true"
