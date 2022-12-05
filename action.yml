@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: CC0-1.0
 
 name: 'Github2lab'
+author: 'Jakob Fritz'
 description: 'Mirroring a repo to gitlab to use the gitlab-ci'
 runs:
   using: "composite"
