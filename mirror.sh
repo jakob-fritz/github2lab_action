@@ -12,7 +12,7 @@ branch="+refs/heads/*:refs/heads/* +refs/tags/*:refs/tags/* +refs/pull/*:refs/he
 # Get the URL of the repo
 echo "Getting the URL of the repo"
 GITLAB_REPO_URL=$(curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}" | jq '.http_url_to_repo' | sed -e 's/http:\/\///' -e 's/https:\/\///' -e 's/"//g')
-echo "URL is ${GITLAB_REPO_URL}"
+echo "URL is https://${GITLAB_REPO_URL}"
 
 # Add the remote Gitlab-Repo to the local git
 echo "adding gitlab-repo as remote"
@@ -31,3 +31,4 @@ else
   # If pushing without "force" creates merge-conflicts, the push is aborted
   sh -c "git push --prune gitlab $branch"
 fi
+echo "Done pushing git-repo to https://${GITLAB_REPO_URL}"
