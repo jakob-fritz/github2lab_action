@@ -11,8 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+    - run: |
+        echo "Last Commit is $GITHUB_SHA on $GITHUB_REF_NAME"
     - name: Mirror
-      uses: "jakob-fritz/github2lab_action@${{ github.sha }}"
+      uses: jakob-fritz/github2lab_action@$GITHUB_REF_NAME
       with:
         GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
         FORCE_PUSH: "true"
