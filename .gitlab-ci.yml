@@ -18,18 +18,24 @@ Failing test:
 Returning success-status to Github:
   stage: .post
   when: on_success
-  image: curlimages/curl:7.86.0
+  image: alpine:3
+  before_script:
+    - apk update
+    - apk add curl
   script:
     # - >
     #   curl -d "{state:success, target_url: ${CI_PIPELINE_URL}, context: gitlab-ci}" -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github+json" -X POST --silent "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${CI_COMMIT_SHA}"
-    - >
-      curl -d '{"state":"success", "target_url": "'"${CI_PIPELINE_URL}"'", "context": "gitlab-ci"}' -H "Authorization:token ${GITHUB_TOKEN}" -H "Accept:application/vnd.github+json" -X POST --silent "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${CI_COMMIT_SHA}"
+    - |
+      curl -d '{"state":"success", "target_url": "'"${CI_PIPELINE_URL}"'", "context": "gitlab-ci"}' -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github+json" -X POST --silent "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${CI_COMMIT_SHA}"
 
 Returning failure-status to Github:
   stage: .post
   when: on_failure
-  image: curlimages/curl:7.86.0
+  image: alpine:3
+  before_script:
+    - apk update
+    - apk add curl
   script:
-    - >
-      curl -d '{"state":"failure", "target_url": "'"${CI_PIPELINE_URL}"'", "context": "gitlab-ci"}' -H "Authorization:token ${GITHUB_TOKEN}" -H "Accept:application/vnd.github+json" -X POST --silent "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${CI_COMMIT_SHA}"
+    - |
+      curl -d '{"state":"failure", "target_url": "'"${CI_PIPELINE_URL}"'", "context": "gitlab-ci"}' -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github+json" -X POST --silent "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${CI_COMMIT_SHA}"
 
