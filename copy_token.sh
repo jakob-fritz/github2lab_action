@@ -20,7 +20,3 @@ curl -d '{"state":"pending", "context": "gitlab-ci"}' -H "Authorization: token $
 echo""
 echo "Done synchronizing the current Github-Token to Gitlab (used for later reporting of the pipeline-status)"
 echo ""
-
-echo "now waiting for 1 minute (for testing purposes)"
-sleep "60"
-echo ""
