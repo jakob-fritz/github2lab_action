@@ -10,7 +10,7 @@ set -u
 
 # Copy the current token to gitlab
 # This token is used later to push the pipeline-result back to Github
-# curl --request PUT --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/variables/${variable_name}" --form "value=${GITHUB_TOKEN}"
+curl --request PUT --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/variables/${variable_name}" --form "value=${GITHUB_TOKEN}"
 
 # Create a status for the gitlab-pipeline and set the status to pending
 # This shall highlight in Github that another result is still missing.
@@ -19,4 +19,8 @@ curl -d '{"state":"pending", "context": "gitlab-ci"}' -H "Authorization: token $
 # Print something, so that it is clear in the logs, that this job ran.
 echo""
 echo "Done synchronizing the current Github-Token to Gitlab (used for later reporting of the pipeline-status)"
+echo ""
+
+echo "now waiting for 1 minute (for testing purposes)"
+sleep "60"
 echo ""
