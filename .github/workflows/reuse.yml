@@ -4,7 +4,7 @@
 
 name: REUSE Compliance Check
 
-on: [pull_request]
+on: [push, pull_request]
 
 jobs:
   reuse_compliance:
