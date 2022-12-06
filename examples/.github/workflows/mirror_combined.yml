@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Mirror
+    - name: Mirror and get status
       uses: jakob-fritz/github2lab_action@main
       env:
         MODE: 'both' # Either 'mirror', 'get_status', or 'both'

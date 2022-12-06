@@ -1,0 +1,37 @@
+# SPDX-FileCopyrightText: 2022 Jakob Fritz <j.fritz@fz-juelich.de>
+#
+# SPDX-License-Identifier: MIT
+
+name: Mirror and run GitLab CI
+
+on: [push, pull_request_target]
+
+jobs:
+  github2lab:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Mirror
+      uses: jakob-fritz/github2lab_action@main
+      env:
+        MODE: 'mirror' # Either 'mirror', 'get_status', or 'both'
+        GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+        FORCE_PUSH: "true"
+        GITLAB_HOSTNAME: "codebase.helmholtz.cloud"
+        GITLAB_PROJECT_ID: "6627"
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # Add additional jobs here
+    # These take place after mirroring to Gitlab (and starting the CI there)
+    # and retrieving the results from the CI at Gitlab.
+    - name: Additional local job
+      run: |
+        echo "This can be a single or many jobs before querying the result from Gitlab-CI"
+    - name: Get status
+      uses: jakob-fritz/github2lab_action@main
+      env:
+        MODE: 'get_status' # Either 'mirror', 'get_status', or 'both'
+        GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+        FORCE_PUSH: "true"
+        GITLAB_HOSTNAME: "codebase.helmholtz.cloud"
+        GITLAB_PROJECT_ID: "6627"
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
