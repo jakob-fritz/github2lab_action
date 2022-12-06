@@ -13,7 +13,9 @@ runs:
         exit 1
       shell: bash
       if:  (env.MODE != 'mirror') && (env.MODE != 'get_status') && (env.MODE != 'both')
-    - run: sh ./mirror.sh
+    - run: |
+        sh ./copy_token.sh
+        sh ./mirror.sh
       shell: bash
       if: (env.MODE == 'mirror') || (env.MODE == 'both')
     - run: sh ./get_ci_state.sh
