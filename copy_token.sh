@@ -6,11 +6,11 @@
 
 set -u
 
-variable_name="GITHUB_TOKEN"
+# variable_name="GITHUB_TOKEN"
 
 # Copy the current token to gitlab
 # This token is used later to push the pipeline-result back to Github
-curl --request PUT --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/variables/${variable_name}" --form "value=${GITHUB_TOKEN}"
+# curl --request PUT --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/variables/${variable_name}" --form "value=${GITHUB_TOKEN}"
 
 # Create a status for the gitlab-pipeline and set the status to pending
 # This shall highlight in Github that another result is still missing.
