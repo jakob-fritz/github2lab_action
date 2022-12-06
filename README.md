@@ -71,8 +71,22 @@ This file adds a job that triggers a CI-Pipeline in Gitlab.
 - Edit the environment-variables in the file to match your project
   - `GITLAB_HOSTNAME` needs to be the base of the Gitlab-Instance.
   E.g. `codebase.helmholtz.cloud` without https:// in front
-  - Set "`GITLAB_PROJECT_ID` to the repository-id
+  - Set `GITLAB_PROJECT_ID` to the repository-id
   that can be found in the main page of the repository (named "Project ID")
+  - Set `MODE` to one of the following: `mirror`, `get_status`, or `both`.
+  This defines, what action is taken by the job.
+    - The first (`mirror`) only synchronizes the local git to gitlab.
+    - The second (`get_status`) gets the state of the last CI-pipeline
+  for the current commit.
+    - The last possibility (`both`) does both of them
+  (first synchronization and afterwards getting the status of the pipeline).
+    - It can be usefull to split the two parts if there are jobs,
+  that shall be done in parallel.
+  Then, it can first be synchronized to Gitlab (using `mirror`),
+  then doing some local CI-jobs and as last job, the `get_status` is used
+  to also query the result from the Gitlab-CI-Pipeline.
+  If no other jobs are run in Github in parallel,
+  the option `both` can be used for simplicity.
 - The following environment-variables can be kept as they are:
   - `FORCE_PUSH` is set to force-push to the Gitlab-Repo, to make sure,
   the Gitlab-Repo stays in sync with the main GitHub-repository.
