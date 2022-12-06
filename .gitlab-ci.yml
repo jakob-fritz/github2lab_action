@@ -18,16 +18,18 @@ Failing test:
 Returning success-status to Github:
   stage: .post
   when: on_success
-  image: alpine:3
+  # image: alpine:3
   script:
-    - |
+    # - >
+    #   curl -d "{state:success, target_url: ${CI_PIPELINE_URL}, context: gitlab-ci}" -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github+json" -X POST --silent "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${CI_COMMIT_SHA}"
+    - >
       curl -d '{"state":"success", "target_url": "'"${CI_PIPELINE_URL}"'", "context": "gitlab-ci"}' -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github+json" -X POST --silent "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${CI_COMMIT_SHA}"
 
 Returning failure-status to Github:
   stage: .post
   when: on_failure
-  image: alpine:3
+  # image: alpine:3
   script:
-    - |
-      curl -d '{"state":"failure", "target_url": "'"${CI_PIPELINE_URL}"'", "context": "gitlab-ci"}' -H "Authorization: token ${GITHUB_TOKEN}"  -H "Accept: application/vnd.github+json" -X POST --silent "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${CI_COMMIT_SHA}"
+    - >
+      curl -d '{"state":"failure", "target_url": "'"${CI_PIPELINE_URL}"'", "context": "gitlab-ci"}' -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github+json" -X POST --silent "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${CI_COMMIT_SHA}"
 
