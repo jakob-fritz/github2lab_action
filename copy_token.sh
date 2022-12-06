@@ -6,7 +6,7 @@
 
 set -u
 
-# variable_name="GITHUB_TOKEN"
+variable_name="GITHUB_TOKEN"
 
 # Copy the current token to gitlab
 # This token is used later to push the pipeline-result back to Github
