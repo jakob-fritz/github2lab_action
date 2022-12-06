@@ -10,6 +10,10 @@ Testing params:
     - echo "$CI_COMMIT_BRANCH"
     - echo "$CI_MERGE_REQUEST_IID"
 
+Failing test:
+  stage: test
+  script:
+    - exit 1
 
 Returning success-status to Github:
   stage: .post
