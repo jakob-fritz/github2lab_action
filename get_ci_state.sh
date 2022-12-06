@@ -60,11 +60,11 @@ echo "For more details on the Jobs see: ${ci_web_url}"
 # and return that as a return-code (0 for success; 1 for failure)
 if [ "$ci_status" = "success" ]
 then
-  curl -d '{"state":"success", "target_url": "'"${ci_web_url}"'", "context": "gitlab-ci"}' -H "Authorization: token ${GITHUB_TOKEN}"  -H "Accept: application/vnd.github+json" -X POST --silent "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}"  > /dev/null
+  # curl -d '{"state":"success", "target_url": "'"${ci_web_url}"'", "context": "gitlab-ci"}' -H "Authorization: token ${GITHUB_TOKEN}"  -H "Accept: application/vnd.github+json" -X POST --silent "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}"  > /dev/null
   exit 0
 elif [ "$ci_status" = "failed" ]
 then
-  curl -d '{"state":"failure", "target_url": "'"${ci_web_url}"'", "context": "gitlab-ci"}' -H "Authorization: token ${GITHUB_TOKEN}"  -H "Accept: application/vnd.github+json" -X POST --silent "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}"  > /dev/null
+  # curl -d '{"state":"failure", "target_url": "'"${ci_web_url}"'", "context": "gitlab-ci"}' -H "Authorization: token ${GITHUB_TOKEN}"  -H "Accept: application/vnd.github+json" -X POST --silent "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}"  > /dev/null
   exit 1
 else
   exit 1
