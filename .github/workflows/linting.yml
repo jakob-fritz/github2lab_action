@@ -19,12 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Install shellcheck
-      run: |
-        sudo apt install shellcheck
     - name: Run shellcheck
-      run: |
-        shellcheck *.sh
+      uses: ludees/action-shellcheck@1.1.0
   CheckBashisms:
     runs-on: ubuntu-latest
     steps:
