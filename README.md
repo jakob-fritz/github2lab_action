@@ -68,6 +68,7 @@ An example for such a file can be found in `examples/.gitlab-ci.yml`.
 - Copy the file `mirror_wait.yml` in `examples/.github/workflows`
 to your own repository (in a directory called `.github/workflows`).
 This file adds a job that triggers a CI-Pipeline in Gitlab.
+- The environment-variables are mostly found in two jobs in the CI. You can also declare them in the upper part to make them available to all jobs. Then, both jobs have access to those variables and use have to declare them only once. However, also all other jobs (e.g. ones in between) have access to those variables. This is why in the examples, the variables are declared directly in the jobs. By this, only those jobs can access the variables.
 - Edit the environment-variables in the file to match your project
   - `GITLAB_HOSTNAME` needs to be the base of the Gitlab-Instance.
   E.g. `codebase.helmholtz.cloud` without https:// in front
