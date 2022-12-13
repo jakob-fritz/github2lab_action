@@ -23,10 +23,10 @@ jobs:
       uses: ludeeus/action-shellcheck@1.1.0
   CheckBashisms:
     runs-on: ubuntu-latest
+    container: alpine:3.17
     steps:
     - uses: actions/checkout@v3
     - name: Install and run checkbashisms
-      container: alpine:3.17
       run: 
         apk add checkbashisms=2.22
         checkbashisms *.sh
