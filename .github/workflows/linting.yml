@@ -20,7 +20,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Run shellcheck
-      uses: ludees/action-shellcheck@1.1.0
+      uses: ludeeus/action-shellcheck@1.1.0
   CheckBashisms:
     runs-on: ubuntu-latest
     steps:
