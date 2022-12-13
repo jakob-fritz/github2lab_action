@@ -25,9 +25,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Install checkbashisms
-      run: |
-        sudo apt install devscripts
-    - name: Run checkbashisms
-      run: |
+    - name: Install and run checkbashisms
+      container: alpine:3.17
+      run: 
+        apk add checkbashisms=2.22
         checkbashisms *.sh
