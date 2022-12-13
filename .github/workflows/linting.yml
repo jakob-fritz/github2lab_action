@@ -26,7 +26,9 @@ jobs:
     container: alpine:3.17
     steps:
     - uses: actions/checkout@v3
-    - name: Install and run checkbashisms
+    - name: Install checkbashisms
       run: 
         apk add checkbashisms=2.22
+    - name: run checkbashisms
+      run: 
         checkbashisms *.sh
