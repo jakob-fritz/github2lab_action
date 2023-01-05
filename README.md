@@ -12,6 +12,8 @@ and returns the results back to GitHub.
 Directly afterwards, a second action uses active polling to determine
 whether the GitLab pipeline is finished. This means that GitHub Action
 will only end after the GitLab CI pipeline finished.
+Depending on the duration of the Gitlab CI pipeline, the second part
+(waiting for the Gitlab CI pipeline) may take some time waiting.
 
 This whole approach also works for pull-requests.
 Then, the credentials of the maintainer are used.
@@ -84,9 +86,14 @@ in the jobs. By this, only those jobs can access the variables.
   This defines, what action is taken by the job.
     - The first (`mirror`) only synchronizes the local git to gitlab.
     - The second (`get_status`) gets the state of the last CI-pipeline
-  for the current commit.
+  for the current commit. It waits (the job runs) until the Gitlab CI pipeline
+  is finished. Depending on the pipeline, this may take some time.
+  Therefore, it might be helpful, to run this job towards the end
+  of the Github pipeline.
     - The last possibility (`both`) does both of them
   (first synchronization and afterwards getting the status of the pipeline).
+  As mentioned directly above, this may take some time (and by this block a
+  github-runner) depending on how much is done in the Gitlab pipeline.
     - It can be usefull to split the two parts if there are jobs,
   that shall be done in parallel.
   Then, it can first be synchronized to Gitlab (using `mirror`),
