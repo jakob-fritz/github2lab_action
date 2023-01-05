@@ -13,6 +13,8 @@ runs:
         exit 1
       shell: bash
       if:  (env.MODE != 'mirror') && (env.MODE != 'get_status') && (env.MODE != 'both')
+    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
     - run: sh ./mirror.sh
       shell: bash
       if: (env.MODE == 'mirror') || (env.MODE == 'both')
