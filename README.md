@@ -123,7 +123,9 @@ name: Mirror and get status
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-This adds the job to mirror to gitlab and wait for the gitlab-pipeline to finish. If the two parts shall be split, so that other jobs can be performed in Github in between, the following example may be more suited.
+This adds the job to mirror to gitlab and wait for the gitlab-pipeline
+to finish. If the two parts shall be split, so that other jobs can be performed
+in Github in between, the following example may be more suited.
 
 ``` yaml
 - name: Mirror
