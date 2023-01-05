@@ -31,6 +31,15 @@ else
   # If pushing without "force" creates merge-conflicts, the push is aborted
   sh -c "git push --prune gitlab $branch"
 fi
-# Report, that pushing is done and add newline afterwards for formatting
-echo "Done pushing git-repo to https://${GITLAB_REPO_URL}"
+# Get the return-code of pushing
+ret_code=$?
+if [ $ret_code = 0 ]
+then
+  # Report, that pushing is done and add newline afterwards for formatting
+  echo "Done pushing git-repo to https://${GITLAB_REPO_URL}"
+else
+  # Report, that pushing resulted in an error
+  echo "Seems as if an error occured while pushing to https://${GITLAB_REPO_URL}. See above for details"
+fi
 echo ""
+exit $ret_code
