@@ -15,9 +15,11 @@ runs:
       if:  (env.MODE != 'mirror') && (env.MODE != 'get_status') && (env.MODE != 'both')
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
-    - run: sh mirror.sh
+    # - run: chmod +x mirror.sh get_ci_state.sh
+    #   shell: bash
+    - run: mirror.sh
       shell: bash
       if: (env.MODE == 'mirror') || (env.MODE == 'both')
-    - run: sh get_ci_state.sh
+    - run: get_ci_state.sh
       shell: bash
       if: (env.MODE == 'get_status') || (env.MODE == 'both')
