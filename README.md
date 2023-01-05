@@ -67,9 +67,9 @@ An example for such a file can be found in `examples/.gitlab-ci.yml`.
 
 ### Github-CI
 
-- Copy the file `mirror_wait.yml` in `examples/.github/workflows`
-to your own repository (in a directory called `.github/workflows`).
-This file adds a job that triggers a CI-Pipeline in Gitlab.
+- To use the action, simply include it in your current github workflows.
+See [Exemplary use](#examplary-use) below for a snippet on how to include the action.
+Full examples on how to include it can be found in `examples/.github/workflows`.
 - The environment-variables are mostly found in two jobs in the CI.
 You can also declare them in the upper part to make them available to all jobs.
 Then, both jobs have access to those variables
@@ -108,6 +108,51 @@ in the jobs. By this, only those jobs can access the variables.
   The secret is set automatically by GitHub.
   - `GITLAB_TOKEN` is used to authorize actions with the Gitlab-repo.
   It uses the secret, that was set above.
+
+### Examplary use
+
+``` yaml
+name: Mirror and get status
+  uses: jakob-fritz/github2lab_action@main
+  env:
+    MODE: 'both' # Either 'mirror', 'get_status', or 'both'
+    GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+    FORCE_PUSH: "true"
+    GITLAB_HOSTNAME: "codebase.helmholtz.cloud"
+    GITLAB_PROJECT_ID: "6627"
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+This adds the job to mirror to gitlab and wait for the gitlab-pipeline to finish. If the two parts shall be split, so that other jobs can be performed in Github in between, the following example may be more suited.
+
+``` yaml
+- name: Mirror
+  uses: jakob-fritz/github2lab_action@main
+  env:
+    MODE: 'mirror' # Either 'mirror', 'get_status', or 'both'
+    GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+    FORCE_PUSH: "true"
+    GITLAB_HOSTNAME: "codebase.helmholtz.cloud"
+    GITLAB_PROJECT_ID: "6627"
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+# Add additional jobs here
+# These take place after mirroring to Gitlab (and starting the CI there)
+# and retrieving the results from the CI at Gitlab.
+- name: Additional local job
+  run: |
+    echo "This can be a single or many jobs before querying the result from Gitlab-CI"
+- name: Get status
+  uses: jakob-fritz/github2lab_action@main
+  env:
+    MODE: 'get_status' # Either 'mirror', 'get_status', or 'both'
+    GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+    FORCE_PUSH: "true"
+    GITLAB_HOSTNAME: "codebase.helmholtz.cloud"
+    GITLAB_PROJECT_ID: "6627"
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+For full examples see also the files in `examples/.github/workflows`.
 
 ### How to use with Pull-Requests
 
