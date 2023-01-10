@@ -168,6 +168,7 @@ If so, the change could be used to gain access to the secret tokens.
 
 In case you find an error or a bug in this project,
 feel free to open an issue.
+
 If you want to fix this error/bug,
 please open a Pull-Request with the code-change.
 
@@ -180,3 +181,17 @@ for the inspiration of this project.
 ([HiRSE_PS](<https://www.helmholtz-hirse.de/>)),
 funded by the [Innovation Fund](<https://www.helmholtz.de/en/transfer/helmholtz-association-transfer-instruments/innovation-fund-of-the-helmholtz-centers/>)
 of the [Helmholtz Association](<https://www.helmholtz.de/en/>).
+
+## License
+
+Copyright © 2022 Jakob Fritz - Forschungszentrum Jülich GmbH, Germany (<https://www.fz-juelich.de/>)
+
+This work is licensed under the following license(s):
+
+- Insignificant files are licensed under [CC0-1.0](LICENSES/CC0-1.0.txt)
+- Everything else is licensed under [MIT](LICENSES/MIT.txt)
+
+Please see the individual files for more accurate information.
+
+> **Hint:** We provided the copyright and license information in accordance
+to the [REUSE Specification 3.0](<https://reuse.software/spec/>).
