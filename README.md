@@ -24,8 +24,28 @@ they can be extracted when the code of the CI is adapted accordingly.
 ## How to use the Gitlab-CI as a contributor
 
 Nothing special. Just contribute to the project as you regularly do
-(and as the project requests). Your contributions are automatically
-tested in the Gitlab-Repo (once the maintainer approved it).
+(and as the project requests). When you create a pull-request,
+your contributions are automatically tested in the Gitlab-Repo
+(once the maintainer approved it).
+
+### How to run the Gitlab-CI in a forked repository (prior to the Pull-Request)
+
+In case the Gitlab-CI in a forked repo shall be run prior to the pull-request,
+a few steps are necessary to be taken.
+It is helpful, if the forked repo does not copy names of branches
+in the main repo, as both repos are mirrored to the same Gitlab-Repo for testing.
+Assuming the maintainer already set up the Gitlab-CI as explained below,
+two more steps are needed.
+
+- First, the maintainer of the main repository needs to create
+  a separate Project-Access-Token (as explained below) and provide it to the
+  user that forked the repo. It is advisable to not reuse an existing token!
+  By creating a new token, the permissions are easier to manage in case of
+  leaked (or otherwise compromised) tokens.
+- Then, the user needs to store it as a repository-secret named `GITLAB_TOKEN`.
+  For more information on how to store it, see the section
+  [Set the token in Github as a secret](#preparation) below.
+  After this, the Github-CI is able to mirror to Gitlab.
 
 ## How to set up a Gitlab-CI with a Github-Repo (as a maintainer)
 
