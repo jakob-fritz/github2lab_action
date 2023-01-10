@@ -184,7 +184,7 @@ of the [Helmholtz Association](<https://www.helmholtz.de/en/>).
 
 ## License
 
-Copyright © 2022 Jakob Fritz - Forschungszentrum Jülich GmbH, Germany (https://www.fz-juelich.de/)
+Copyright © 2022 Jakob Fritz - Forschungszentrum Jülich GmbH, Germany (<https://www.fz-juelich.de/>)
 
 This work is licensed under the following license(s):
 
@@ -193,4 +193,5 @@ This work is licensed under the following license(s):
 
 Please see the individual files for more accurate information.
 
-> **Hint:** We provided the copyright and license information in accordance to the [REUSE Specification 3.0](https://reuse.software/spec/).
+> **Hint:** We provided the copyright and license information in accordance
+to the [REUSE Specification 3.0](<https://reuse.software/spec/>).
