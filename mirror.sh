@@ -26,10 +26,10 @@ then
   # Force push is used to make sure the gitlab-repo is the same as github
   # If gitlab diverges, all changes from github are mirrored to GitLab
   # even if that overwrites changes
-  sh -c "git push --prune --force gitlab $branch"
+  sh -c "git push --force gitlab $branch"
 else
   # If pushing without "force" creates merge-conflicts, the push is aborted
-  sh -c "git push --prune gitlab $branch"
+  sh -c "git push gitlab $branch"
 fi
 # Get the return-code of pushing
 ret_code=$?
