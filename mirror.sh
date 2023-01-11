@@ -21,15 +21,24 @@ git remote add gitlab "https://TOKENUSER:${GITLAB_TOKEN}@${GITLAB_REPO_URL}"
 sh -c "git fetch --force origin $branch"
 
 # Push the current state of the repo to GitLab
-if [ "${FORCE_PUSH:-}" = "true" ]
-then
+if [ "${FORCE_PUSH:-}" = "true" ]; then
   # Force push is used to make sure the gitlab-repo is the same as github
   # If gitlab diverges, all changes from github are mirrored to GitLab
   # even if that overwrites changes
-  sh -c "git push --force gitlab $branch"
+  if [ "${PRUNE:-}" = "true" ]; then
+    # Check if the remote repo shall be pruned. Pruning leads to fewer obsolete
+    # and stale branches, but can lead to errors if multiple repos push there
+    sh -c "git push --prune --force gitlab $branch"
+  else
+    sh -c "git push --force gitlab $branch"
+  fi
 else
   # If pushing without "force" creates merge-conflicts, the push is aborted
-  sh -c "git push gitlab $branch"
+  if [ "${PRUNE:-}" = "true" ]; then
+    sh -c "git push --prune gitlab $branch"
+  else
+    sh -c "git push gitlab $branch"
+  fi
 fi
 # Get the return-code of pushing
 ret_code=$?

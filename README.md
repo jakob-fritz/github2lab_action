@@ -124,6 +124,10 @@ in the jobs. By this, only those jobs can access the variables.
 - The following environment-variables can be kept as they are:
   - `FORCE_PUSH` is set to force-push to the Gitlab-Repo, to make sure,
   the Gitlab-Repo stays in sync with the main GitHub-repository.
+  - `PRUNE` is used to decide if git shall remove remote branches, that
+  have been removed locally. If only a single repo mirrors to the remote repo,
+  `PRUNE` can be kept as `true`. Otherwise, it may help to set to `false`
+  to avoid errors from deleting protected remote branches.
   - `GITHUB_TOKEN` is used to authorize internal actions.
   The secret is set automatically by GitHub.
   - `GITLAB_TOKEN` is used to authorize actions with the Gitlab-repo.
