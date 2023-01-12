@@ -31,6 +31,14 @@ jobs:
         GITLAB_HOSTNAME: "codebase.helmholtz.cloud"
         GITLAB_PROJECT_ID: "6627"
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Get-Artifacts
+      uses: ./
+      env:
+        MODE: 'get_artifact'
+        GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+        GITLAB_HOSTNAME: "codebase.helmholtz.cloud"
+        GITLAB_PROJECT_ID: "6627"
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Mirror and get status
       uses: ./
       env:
