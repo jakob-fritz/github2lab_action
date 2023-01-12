@@ -17,6 +17,7 @@ jobs:
         MODE: 'mirror' # Either 'mirror', 'get_status', or 'both'
         GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
         FORCE_PUSH: "true"
+        PRUNE: "true"
         GITLAB_HOSTNAME: "codebase.helmholtz.cloud"
         GITLAB_PROJECT_ID: "6627"
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -32,6 +33,7 @@ jobs:
         MODE: 'get_status' # Either 'mirror', 'get_status', or 'both'
         GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
         FORCE_PUSH: "true"
+        PRUNE: "true"
         GITLAB_HOSTNAME: "codebase.helmholtz.cloud"
         GITLAB_PROJECT_ID: "6627"
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
