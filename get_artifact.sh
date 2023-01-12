@@ -14,7 +14,7 @@ jobs=$(curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent "https://${GITLAB_H
 # pagination is needed if pipeline has more than 100 jobs
 for job in $jobs
 do
-    if [$("${job}" | jq '.artifacts') != 'null']; then
+    if [ $("${job}" | jq '.artifacts') != 'null' ]; then
         # Extract job-id and name of the job (to get the artifact later)
         job_id=$("${job}" | jq '.id')
         job_name=$("${job}" | jq '.name')
