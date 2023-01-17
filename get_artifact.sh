@@ -11,7 +11,7 @@ pipeline_id=$(curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent "https://${G
 jobs=$(curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/pipelines/${pipeline_id}/jobs?per_page=100")
 
 mkdir "artifacts"
-'cd "artifacts" || exit 1'
+cd "artifacts"
 
 # pagination is needed if pipeline has more than 100 jobs
 for job in $jobs
