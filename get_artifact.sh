@@ -24,8 +24,6 @@ do
         # Download artifact of this single job into dir with the job-name
         mkdir "${job_name}"
         # Creating a subshell to download into dir
-        ("cd '${job_name}' || exit 1"
-        curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/jobs/${job_id}/artifacts"
-        )
+        curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent --output-dir "${job_name}" --remote-name "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/jobs/${job_id}/artifacts"
     fi
 done
