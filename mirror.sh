@@ -4,7 +4,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-set -u
+set -u -e
 
 # Define what branches and tags, etc to fetch and to push
 branch="+refs/heads/*:refs/heads/* +refs/tags/*:refs/tags/* +refs/pull/*:refs/heads/pull/*"
