@@ -21,9 +21,9 @@ do
         # Extract job-id and name of the job (to get the artifact later)
         job_id=$( echo "${job}" | jq '.id')
         job_name=$( echo "${job}" | jq '.name')
-        # Download artifact of this single job into dir with the job-name
-        mkdir "${job_name}"
-        # Creating a subshell to download into dir
-        curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent --output-dir "${job_name}" --remote-name "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/jobs/${job_id}/artifacts"
+        echo "Job $job_id with name $job_name seems to have an artifact. Downloading it..."
+        # Download artifact of this single job into file with the job-name
+        curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent --output "${job_name}.zip" "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/jobs/${job_id}/artifacts"
+        echo "Done dowloading the file from job $job_id $job_name"
     fi
 done
