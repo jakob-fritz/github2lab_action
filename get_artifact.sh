@@ -4,15 +4,14 @@
 #
 # SPDX-License-Identifier: MIT
 
-
-set -u
+set -u -e
 
 # Get the id of the last pipeline that run for a given commit (GITHUB_SHA) and get all jobs of that pipeline
 pipeline_id=$(curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/repository/commits/${GITHUB_SHA}" | jq '.last_pipeline.id')
 jobs=$(curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/pipelines/${pipeline_id}/jobs?per_page=100")
 
 mkdir "artifacts"
-cd "artifacts"
+'cd "artifacts" || exit 1'
 
 # pagination is needed if pipeline has more than 100 jobs
 for job in $jobs
