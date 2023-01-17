@@ -14,10 +14,10 @@ jobs=$(curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent "https://${GITLAB_H
 # pagination is needed if pipeline has more than 100 jobs
 for job in $jobs
 do
-    if ( echo $job | jq 'has("artifact")' ); then
+    if echo "$job" | jq --exit-status 'has("artifact")' ; then
         # Extract job-id and name of the job (to get the artifact later)
-        job_id=$( echo ${job} | jq '.id')
-        job_name=$( echo ${job} | jq '.name')
+        job_id=$( echo "${job}" | jq '.id')
+        job_name=$( echo "${job}" | jq '.name')
         # Download artifact of this single job into dir with the job-name
         mkdir "${job_name}"
         # Creating a subshell to download into dir
