@@ -15,16 +15,11 @@ echo "URL is https://${GITLAB_REPO_URL}"
 echo "adding gitlab-repo as remote"
 git remote add gitlab "https://TOKENUSER:${GITLAB_TOKEN}@${GITLAB_REPO_URL}"
 # Get current state of local git
-git status
 sh -c "git checkout ${GITHUB_REF_NAME}"
-git status
 # Get the current state of the single branch from the GitHub-Repo
 sh -c "git fetch --prune --no-tags --force origin ${GITHUB_REF_NAME}"
-git status
 sh -c "git pull --no-tags --force origin ${GITHUB_REF_NAME}"
-
 git status
-
 # Push the current state of the repo to GitLab
 if [ "${FORCE_PUSH:-}" = "true" ]; then
   # Force push is used to make sure the gitlab-repo is the same as github
