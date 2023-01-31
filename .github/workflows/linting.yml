@@ -43,4 +43,4 @@ jobs:
     - name: Reformat code using black
       shell: bash -l {0}
       run: |
-        python -m black *.py --check --diff --color
+        python -m black **/*.py --check --diff --color
