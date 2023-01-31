@@ -44,9 +44,3 @@ jobs:
       shell: bash -l {0}
       run: |
         python -m black *.py --check --diff --color
-    - name: Linting code using flakeheaven
-      shell: bash -l {0}
-      # Ignoring W503 (line break before binary operator)
-      # Because now it is best practice and done by black
-      run: |
-        python -m flakeheaven lint --extend-ignore=W503
