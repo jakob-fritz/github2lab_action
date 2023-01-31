@@ -36,7 +36,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - name: Import dependencies for linter
+      run:
+        pip install black
     - name: Python Linter
       uses: sunnysid3up/python-linter@v0.1-beta.7
+      with:
+        django: false
+
 
 
