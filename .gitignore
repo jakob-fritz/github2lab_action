@@ -4,3 +4,4 @@
 
 .reuse/*
 .DS_Store
+.vscode/*
