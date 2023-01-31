@@ -1,3 +1,8 @@
+/* SPDX-FileCopyrightText: 2023 Jakob Fritz <j.fritz@fz-juelich.de>
+
+SPDX-License-Identifier: MIT */
+
+
 let process = {
     env : {},
 }
