@@ -54,7 +54,7 @@ def download_artifacts(job_list):
     It takes only the list of jobs and returns nothing
     """
     # Create directory to store artifacts in
-    os.makedirs('artifacts')
+    os.makedirs("artifacts")
     for job in job_list:
         # If a job has an artifact (apart from the log), download it
         if any([e["file_type"] == "archive" for e in job["artifacts"]]):
