@@ -24,3 +24,7 @@ runs:
     - run: python ./get_artifact.py
       shell: bash
       if: (env.MODE == 'get_artifact') || (env.MODE == 'both') || (env.MODE == 'all')
+    - uses: actions/upload-artifact@v3
+      with:
+        path: artifacts/
+      if: (env.MODE == 'get_artifact') || (env.MODE == 'both') || (env.MODE == 'all')

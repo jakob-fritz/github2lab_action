@@ -93,7 +93,7 @@ def download_single_artifact(job):
         f"https://{env['GITLAB_HOSTNAME']}/api/v4/projects/"
         + f"{env['GITLAB_PROJECT_ID']}/jobs/{job_id}/artifacts"
     )
-    with open(f"{job['name']}.{artifact['file_format']}", "wb") as file:
+    with open(f"./artifacts/{job['name']}.{artifact['file_format']}", "wb") as file:
         # Get the file (artifact)
         response = requests.get(file_url, headers=headers)
         # Raise an error if the request was unsuccessfull
