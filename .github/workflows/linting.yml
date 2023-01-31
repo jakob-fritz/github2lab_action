@@ -42,6 +42,7 @@ jobs:
         environment-file: etc/environment-lint.yml
     - name: activate environment
       run: |
+        micromamba shell init --shell=bash --prefix=~/micromamba
         micromamba activate github2lab_action
     - name: Reformat code using black
       run: |
