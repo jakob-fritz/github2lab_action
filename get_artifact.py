@@ -10,6 +10,7 @@ and uses environment-variables as input.
 """
 
 from os import environ as env
+import os
 import requests
 
 
@@ -52,6 +53,8 @@ def download_artifacts(job_list):
     (ususally the ones in a single pipeline).
     It takes only the list of jobs and returns nothing
     """
+    # Create directory to store artifacts in
+    os.makedirs('artifacts')
     for job in job_list:
         # If a job has an artifact (apart from the log), download it
         if any([e["file_type"] == "archive" for e in job["artifacts"]]):
@@ -93,7 +96,7 @@ def download_single_artifact(job):
         f"https://{env['GITLAB_HOSTNAME']}/api/v4/projects/"
         + f"{env['GITLAB_PROJECT_ID']}/jobs/{job_id}/artifacts"
     )
-    with open(f"./artifacts/{job['name']}.{artifact['file_format']}", "wb") as file:
+    with open(f"artifacts/{job['name']}.{artifact['file_format']}", "wb") as file:
         # Get the file (artifact)
         response = requests.get(file_url, headers=headers)
         # Raise an error if the request was unsuccessfull
