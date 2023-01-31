@@ -36,13 +36,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Install Conda environment with Micromamba
+    - name: Install dependencies using micromamba
       uses: mamba-org/provision-with-micromamba@main
       with:
         environment-file: etc/environment-lint.yml
-    - name: Code reformatting with black
+    - name: Reformat code using black
       run: |
-        black pySDC  --check --diff --color
-    - name: Linting with flakeheaven
+        python -m black *.py --check --diff --color
+    - name: Linting code using flakeheaven
       run: |
-        flakeheaven lint
+        python -m flakeheaven lint
