@@ -3,16 +3,16 @@
 # SPDX-License-Identifier: MIT
 
 import requests
-import os.environ as env
+from os import environ as env
 
 def get_job_list():
-    pipeline_url = f'https://{env.GITLAB_HOSTNAME}/api/v4/projects/${env.GITLAB_PROJECT_ID}/repository/commits/${env.GITHUB_SHA}'
+    pipeline_url = f'https://{env.GITLAB_HOSTNAME}/api/v4/projects/{env.GITLAB_PROJECT_ID}/repository/commits/{env.GITHUB_SHA}'
     print(pipeline_url)
     headers = {'PRIVATE-TOKEN': env.GITLAB_TOKEN}
     r = requests.get(pipeline_url, headers=headers)
     pipeline_id = r.json()['last_pipeline']['id']
     print(f'Pipeline-ID is {pipeline_id}')
-    jobs_url = f'https://{env.GITLAB_HOSTNAME}/api/v4/projects/{env.GITLAB_PROJECT_ID}/pipelines/${pipeline_id}/jobs'
+    jobs_url = f'https://{env.GITLAB_HOSTNAME}/api/v4/projects/{env.GITLAB_PROJECT_ID}/pipelines/{pipeline_id}/jobs'
     job_list = requests.get(jobs_url, headers=headers).json()
     return job_list
 
@@ -43,6 +43,6 @@ def download_single_artifact(job):
         file.write(r.content)
     print(f'Downloaded file from job {job.name}.')
 
-if __name__=='main':
+if __name__=='__main__':
     job_list = get_job_list()
     download_artifacts(job_list)
