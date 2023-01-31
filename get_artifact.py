@@ -6,13 +6,13 @@ import requests
 from os import environ as env
 
 def get_job_list():
-    pipeline_url = f'https://{env.GITLAB_HOSTNAME}/api/v4/projects/{env.GITLAB_PROJECT_ID}/repository/commits/{env.GITHUB_SHA}'
+    pipeline_url = f"https://{env['GITLAB_HOSTNAME']}/api/v4/projects/{env['GITLAB_PROJECT_ID']}/repository/commits/{env['GITHUB_SHA']}"
     print(pipeline_url)
     headers = {'PRIVATE-TOKEN': env.GITLAB_TOKEN}
     r = requests.get(pipeline_url, headers=headers)
     pipeline_id = r.json()['last_pipeline']['id']
     print(f'Pipeline-ID is {pipeline_id}')
-    jobs_url = f'https://{env.GITLAB_HOSTNAME}/api/v4/projects/{env.GITLAB_PROJECT_ID}/pipelines/{pipeline_id}/jobs'
+    jobs_url = f"https://{env['GITLAB_HOSTNAME']}/api/v4/projects/{env['GITLAB_PROJECT_ID']}/pipelines/{pipeline_id}/jobs"
     job_list = requests.get(jobs_url, headers=headers).json()
     return job_list
 
@@ -36,7 +36,7 @@ def download_single_artifact(job):
     filename = artifact.filename
     job_id = job.id
     headers = {'PRIVATE-TOKEN': env.GITLAB_TOKEN}
-    file_url = f"https://{env.GITLAB_HOSTNAME}/api/v4/projects/{env.GITLAB_PROJECT_ID}/jobs/{job_id}/artifacts"
+    file_url = f"https://{env['GITLAB_HOSTNAME']}/api/v4/projects/{env['GITLAB_PROJECT_ID']}/jobs/{job_id}/artifacts"
     r = requests.get(file_url, headers=headers)
     with open(f'{job.name}.{artifact.file_format}', 'wb') as file:
         r = requests.get(file_url, headers=headers)
