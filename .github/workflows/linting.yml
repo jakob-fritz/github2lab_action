@@ -40,13 +40,11 @@ jobs:
       uses: mamba-org/provision-with-micromamba@main
       with:
         environment-file: etc/environment-lint.yml
-    - name: activate environment
-      run: |
-        micromamba shell init --shell=bash --prefix=~/micromamba
-        micromamba activate github2lab_action
     - name: Reformat code using black
+      shell: bash -l {0}
       run: |
         python -m black *.py --check --diff --color
     - name: Linting code using flakeheaven
+      shell: bash -l {0}
       run: |
-        flakeheaven lint
+        python -m flakeheaven lint
