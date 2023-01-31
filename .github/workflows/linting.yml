@@ -36,13 +36,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Import dependencies for linter
-      run:
-        pip install black
-    - name: Python Linter
-      uses: sunnysid3up/python-linter@v0.1-beta.7
+    - name: Install Conda environment with Micromamba
+      uses: mamba-org/provision-with-micromamba@main
       with:
-        django: false
-
-
-
+        environment-file: etc/environment-lint.yml
+    - name: Code reformatting with black
+      run: |
+        black pySDC  --check --diff --color
+    - name: Linting with flakeheaven
+      run: |
+        flakeheaven lint

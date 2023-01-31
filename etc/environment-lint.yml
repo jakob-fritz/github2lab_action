@@ -1,0 +1,14 @@
+# SPDX-FileCopyrightText: 2023 Jakob Fritz <j.fritz@fz-juelich.de>
+#
+# SPDX-License-Identifier: CC0-1.0
+
+
+name: github2lab_action
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - black
+  - flakeheaven
+  - flake8-comprehensions
+  - flake8-bugbear
