@@ -22,7 +22,7 @@ runs:
       if: (env.MODE == 'mirror') || (env.MODE == 'both') || (env.MODE == 'all')
     - run: get_ci_state.sh
       shell: bash
-      if: (env.MODE == 'get_status') || (env.MODE == 'both') || (env.MODE == 'all')
-    - run: get_artifact.sh
-      shell: bash
+      if: (env.MODE == 'get_status') || (env.MODE == 'both') || (env.MODE == 'all') 
+    - run: get_artifact.py
+      shell: python
       if: (env.MODE == 'get_artifact') || (env.MODE == 'both') || (env.MODE == 'all')
