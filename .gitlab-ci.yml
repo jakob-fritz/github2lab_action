@@ -4,6 +4,7 @@
 
 Testing params:
   stage: test
+  image: alpine:latest
   script:
     - echo "Hello World"
     - echo "$CI_COMMIT_SHA"
