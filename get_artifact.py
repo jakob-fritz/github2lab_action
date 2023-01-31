@@ -24,17 +24,21 @@ def get_job_list():
     GITLAB_PROJECT_ID: ID of the project (e.g. 1234)
     GITLAB_TOKEN: A secret token to access gitlab with more rights
     """
-    pipeline_url = f"https://{env['GITLAB_HOSTNAME']}/api/v4/projects/" + \
-        f"{env['GITLAB_PROJECT_ID']}/repository/commits/{env['GITHUB_SHA']}"
-    headers = {'PRIVATE-TOKEN': env['GITLAB_TOKEN']}
+    pipeline_url = (
+        f"https://{env['GITLAB_HOSTNAME']}/api/v4/projects/"
+        + f"{env['GITLAB_PROJECT_ID']}/repository/commits/{env['GITHUB_SHA']}"
+    )
+    headers = {"PRIVATE-TOKEN": env["GITLAB_TOKEN"]}
     # Get the pipeline for the commit
     response = requests.get(pipeline_url, headers=headers)
     # Raise an error if the request was not successfull
     response.raise_for_status()
-    pipeline_id = response.json()['last_pipeline']['id']
-    print(f'Pipeline-ID is {pipeline_id}')
-    jobs_url = f"https://{env['GITLAB_HOSTNAME']}/api/v4/projects/" + \
-        f"{env['GITLAB_PROJECT_ID']}/pipelines/{pipeline_id}/jobs"
+    pipeline_id = response.json()["last_pipeline"]["id"]
+    print(f"Pipeline-ID is {pipeline_id}")
+    jobs_url = (
+        f"https://{env['GITLAB_HOSTNAME']}/api/v4/projects/"
+        + f"{env['GITLAB_PROJECT_ID']}/pipelines/{pipeline_id}/jobs"
+    )
     # Get the list of jobs for the pipeline-id (determined above)
     response = requests.get(jobs_url, headers=headers)
     response.raise_for_status()
@@ -50,10 +54,12 @@ def download_artifacts(job_list):
     """
     for job in job_list:
         # If a job has an artifact (apart from the log), download it
-        if any([e['file_type'] == "archive" for e in job['artifacts']]):
+        if any([e["file_type"] == "archive" for e in job["artifacts"]]):
             download_single_artifact(job)
         else:
-            print(f"The following job does not exhibit an artifact for download: {job['name']}")
+            print(
+                f"The following job does not exhibit an artifact for download: {job['name']}"
+            )
 
 
 def get_artifact_info(job):
@@ -64,9 +70,9 @@ def get_artifact_info(job):
     Takes the job as input.
     returns a dict with info of the artifact to be downloaded.
     """
-    for artifact in job['artifacts']:
+    for artifact in job["artifacts"]:
         # Return the correct artifact (i.e. not the log)
-        if artifact['file_type'] == "archive":
+        if artifact["file_type"] == "archive":
             return artifact
     raise KeyError(f"No artifact found for job: {job['name']}")
 
@@ -80,11 +86,13 @@ def download_single_artifact(job):
     Takes the job as input and returns nothing.
     """
     artifact = get_artifact_info(job)
-    job_id = job['id']
-    headers = {'PRIVATE-TOKEN': env['GITLAB_TOKEN']}
-    file_url = f"https://{env['GITLAB_HOSTNAME']}/api/v4/projects/" + \
-        f"{env['GITLAB_PROJECT_ID']}/jobs/{job_id}/artifacts"
-    with open(f"{job['name']}.{artifact['file_format']}", 'wb') as file:
+    job_id = job["id"]
+    headers = {"PRIVATE-TOKEN": env["GITLAB_TOKEN"]}
+    file_url = (
+        f"https://{env['GITLAB_HOSTNAME']}/api/v4/projects/"
+        + f"{env['GITLAB_PROJECT_ID']}/jobs/{job_id}/artifacts"
+    )
+    with open(f"{job['name']}.{artifact['file_format']}", "wb") as file:
         # Get the file (artifact)
         response = requests.get(file_url, headers=headers)
         # Raise an error if the request was unsuccessfull
@@ -94,6 +102,6 @@ def download_single_artifact(job):
     print(f"Downloaded file from job: {job['name']}.")
 
 
-if __name__=='__main__':
+if __name__ == "__main__":
     jobs = get_job_list()
     download_artifacts(jobs)
