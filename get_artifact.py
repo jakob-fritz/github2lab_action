@@ -43,8 +43,6 @@ def download_single_artifact(job):
         file.write(r.content)
     print(f'Downloaded file from job {job.name}.')
 
-print(f'Name is {__name__}')
-
-# if __name__=='__main__':
-job_list = get_job_list()
-download_artifacts(job_list)
+if __name__=='__main__':
+    job_list = get_job_list()
+    download_artifacts(job_list)
