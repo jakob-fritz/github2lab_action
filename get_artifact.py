@@ -58,7 +58,8 @@ def download_artifacts(job_list):
             download_single_artifact(job)
         else:
             print(
-                f"The following job does not exhibit an artifact for download: {job['name']}"
+                "The following job does not exhibit "
+                + f"an artifact for download: {job['name']}"
             )
 
 
