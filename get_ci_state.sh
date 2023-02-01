@@ -4,17 +4,29 @@
 #
 # SPDX-License-Identifier: MIT
 
-set -u
+set -u -e
 
 # Set a default waiting-time in seconds between queries,
 # if the pipeline finished
 DEFAULT_POLL_TIMEOUT=10
 POLL_TIMEOUT=${POLL_TIMEOUT:-$DEFAULT_POLL_TIMEOUT}
 
+echo "Triggered CI for branch ${GITHUB_REF}"
 # Get the id of the last pipeline that run for a given commit (GITHUB_SHA)
 pipeline_id=$(curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/repository/commits/${GITHUB_SHA}" | jq '.last_pipeline.id')
 
-echo "Triggered CI for branch ${GITHUB_REF}"
+pipeline_id_attempt=1
+until [ "$pipeline_id" != "null" ]
+do
+  sleep "$POLL_TIMEOUT"
+  pipeline_id=$(curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/repository/commits/${GITHUB_SHA}" | jq '.last_pipeline.id')
+  pipeline_id_attempt=$((pipeline_id_attempt + 1))
+  if [ "$pipeline_id_attempt" -gt "5" ]
+  then
+    exit 1
+  fi
+done
+
 echo "Working with pipeline id #${pipeline_id}"
 echo "Poll timeout set to ${POLL_TIMEOUT} s"
 

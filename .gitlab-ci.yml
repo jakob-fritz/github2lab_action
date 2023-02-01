@@ -2,10 +2,28 @@
 #
 # SPDX-License-Identifier: MIT
 
-Testing params:
+Testing params without artifact:
   stage: test
+  image: alpine:latest
   script:
     - echo "Hello World"
     - echo "$CI_COMMIT_SHA"
     - echo "$CI_COMMIT_BRANCH"
     - echo "$CI_MERGE_REQUEST_IID"
+
+Testing params to artifact:
+  stage: test
+  image: alpine:latest
+  script:
+    - echo "Hello World" | tee -a artifact_text.txt
+    - echo "Current date is" | tee -a artifact_text.txt
+    - date | tee -a artifact_text.txt
+    - echo "Commit-SHA, Commit-branch, merge-request-id"  | tee -a artifact_text.txt
+    - echo "$CI_COMMIT_SHA" | tee -a artifact_text.txt
+    - echo "$CI_COMMIT_BRANCH" | tee -a artifact_text.txt
+    - echo "$CI_MERGE_REQUEST_IID" | tee -a artifact_text.txt
+  artifacts:
+    expire_in: "1 day"
+    name: "gitlab-ci-artifact"
+    paths:
+      - artifact_text.txt

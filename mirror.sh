@@ -4,7 +4,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-set -u
+set -u -e
 
 # Get the URL of the repo
 echo "Getting the URL of the repo"

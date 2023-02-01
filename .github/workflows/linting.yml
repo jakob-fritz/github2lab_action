@@ -32,3 +32,15 @@ jobs:
     - name: run checkbashisms
       run: 
         checkbashisms *.sh
+  PythonLinting:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install dependencies using micromamba
+      uses: mamba-org/provision-with-micromamba@main
+      with:
+        environment-file: etc/environment-lint.yml
+    - name: Reformat code using black
+      shell: bash -l {0}
+      run: |
+        python -m black *.py --check --diff --color

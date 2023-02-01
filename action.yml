@@ -9,17 +9,22 @@ runs:
   using: "composite"
   steps:
     - run: |
-        echo "Mode is unknown. It must be 'mirror', 'get_status', or 'both'. Not '$MODE'"
+        echo "Mode is unknown. It must be 'mirror', 'get_status', 'get_artifact', or 'all'. Not '$MODE'"
         exit 1
       shell: bash
-      if:  (env.MODE != 'mirror') && (env.MODE != 'get_status') && (env.MODE != 'both')
+      if:  (env.MODE != 'mirror') && (env.MODE != 'get_status') && (env.MODE != 'both') && (env.MODE != 'all') && (env.MODE != 'get_artifact')
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
-    # - run: chmod +x mirror.sh get_ci_state.sh
-    #   shell: bash
     - run: mirror.sh
       shell: bash
-      if: (env.MODE == 'mirror') || (env.MODE == 'both')
+      if: (env.MODE == 'mirror') || (env.MODE == 'both') || (env.MODE == 'all')
     - run: get_ci_state.sh
       shell: bash
-      if: (env.MODE == 'get_status') || (env.MODE == 'both')
+      if: (env.MODE == 'get_status') || (env.MODE == 'both') || (env.MODE == 'all') 
+    - run: python ./get_artifact.py
+      shell: bash
+      if: (env.MODE == 'get_artifact') || (env.MODE == 'both') || (env.MODE == 'all')
+    - uses: actions/upload-artifact@v3
+      with:
+        path: ./artifacts/
+      if: (env.MODE == 'get_artifact') || (env.MODE == 'both') || (env.MODE == 'all')
