@@ -208,7 +208,9 @@ that is executed by the CI, check if the code may expose or transmit secrets
 that have been set above.
 If so, the change could be used to gain access to the secret tokens.
 
-### Troubleshoot
+## Troubleshoot
+
+### Action failing unexpectedly
 
 When an action (e.g. for mirroring) fails unexpectedly, please double-check
 if the Gitlab-project offers a valid Project-Access-Token
