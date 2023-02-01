@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2022 Jakob Fritz <j.fritz@fz-juelich.de>
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
 # Changelog
 
 ## v0.3
