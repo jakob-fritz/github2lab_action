@@ -14,7 +14,7 @@ jobs:
     - name: Mirror
       uses: jakob-fritz/github2lab_action@main
       env:
-        MODE: 'mirror' # Either 'mirror', 'get_status', or 'both'
+        MODE: 'mirror' # Either 'mirror', 'get_status', or 'all'
         GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
         FORCE_PUSH: "true"
         GITLAB_HOSTNAME: "codebase.helmholtz.cloud"
@@ -29,9 +29,16 @@ jobs:
     - name: Get status
       uses: jakob-fritz/github2lab_action@main
       env:
-        MODE: 'get_status' # Either 'mirror', 'get_status', or 'both'
+        MODE: 'get_status' # Either 'mirror', 'get_status', or 'all'
         GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
-        FORCE_PUSH: "true"
+        GITLAB_HOSTNAME: "codebase.helmholtz.cloud"
+        GITLAB_PROJECT_ID: "6627"
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Get artifacts
+      uses: jakob-fritz/github2lab_action@main
+      env:
+        MODE: 'get_artifact' # Either 'mirror', 'get_status', or 'all'
+        GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
         GITLAB_HOSTNAME: "codebase.helmholtz.cloud"
         GITLAB_PROJECT_ID: "6627"
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

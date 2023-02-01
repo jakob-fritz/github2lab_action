@@ -105,10 +105,11 @@ variables. This is why in the examples, the variables are declared directly
 in the jobs. By this, only those jobs can access the variables.
 - Edit the environment-variables in the file to match your project
   - `GITLAB_HOSTNAME` needs to be the base of the Gitlab-Instance.
-  E.g. `codebase.helmholtz.cloud` without https:// in front
+  E.g. `codebase.helmholtz.cloud` without <https://> in front
   - Set `GITLAB_PROJECT_ID` to the repository-id
   that can be found in the main page of the repository (named "Project ID")
-  - Set `MODE` to one of the following: `mirror`, `get_status`, or `both`.
+  - Set `MODE` to one of the following: `mirror`, `get_status`, `get_artifact`,
+  or `all`.
   This defines, what action is taken by the job.
     - The first (`mirror`) only synchronizes the local git to gitlab.
     - The second (`get_status`) gets the state of the last CI-pipeline
@@ -116,17 +117,22 @@ in the jobs. By this, only those jobs can access the variables.
   is finished. Depending on the pipeline, this may take some time.
   Therefore, it might be helpful, to run this job towards the end
   of the Github pipeline.
-    - The last possibility (`both`) does both of them
+    - The third (`get_artifact`) should be run only after `get_status`.
+    It looks for artifacts from the Gitlab-Code and uploads them as
+    Github-Artifacts.
+    - The last possibility (`all`) does both of them
   (first synchronization and afterwards getting the status of the pipeline).
   As mentioned directly above, this may take some time (and by this block a
   github-runner) depending on how much is done in the Gitlab pipeline.
     - It can be usefull to split the two parts if there are jobs,
   that shall be done in parallel.
   Then, it can first be synchronized to Gitlab (using `mirror`),
-  then doing some local CI-jobs and as last job, the `get_status` is used
+  then doing some local CI-jobs and afterwards, the `get_status` is used
   to also query the result from the Gitlab-CI-Pipeline.
+  The last job can be `get_artifact`. This job looks for artifacts in the
+  Gitlab-CI-Jobs and downloads them to upload them as Github-Artifacts.
   If no other jobs are run in Github in parallel,
-  the option `both` can be used for simplicity.
+  the option `all` can be used for simplicity.
 - The following environment-variables can be kept as they are:
   - `FORCE_PUSH` is set to force-push to the Gitlab-Repo, to make sure,
   the Gitlab-Repo stays in sync with the main GitHub-repository.
@@ -141,7 +147,7 @@ in the jobs. By this, only those jobs can access the variables.
 name: Mirror and get status
   uses: jakob-fritz/github2lab_action@main
   env:
-    MODE: 'both' # Either 'mirror', 'get_status', or 'both'
+    MODE: 'all' # Either 'mirror', 'get_status', or 'all'
     GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
     FORCE_PUSH: "true"
     GITLAB_HOSTNAME: "codebase.helmholtz.cloud"
@@ -157,7 +163,7 @@ in Github in between, the following example may be more suited.
 - name: Mirror
   uses: jakob-fritz/github2lab_action@main
   env:
-    MODE: 'mirror' # Either 'mirror', 'get_status', or 'both'
+    MODE: 'mirror' # Either 'mirror', 'get_status', or 'all'
     GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
     FORCE_PUSH: "true"
     GITLAB_HOSTNAME: "codebase.helmholtz.cloud"
@@ -172,9 +178,16 @@ in Github in between, the following example may be more suited.
 - name: Get status
   uses: jakob-fritz/github2lab_action@main
   env:
-    MODE: 'get_status' # Either 'mirror', 'get_status', or 'both'
+    MODE: 'get_status' # Either 'mirror', 'get_status', or 'all'
     GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
-    FORCE_PUSH: "true"
+    GITLAB_HOSTNAME: "codebase.helmholtz.cloud"
+    GITLAB_PROJECT_ID: "6627"
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+- name: Get artifacts
+  uses: jakob-fritz/github2lab_action@main
+  env:
+    MODE: 'get_artifact' # Either 'mirror', 'get_status', or 'all'
+    GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
     GITLAB_HOSTNAME: "codebase.helmholtz.cloud"
     GITLAB_PROJECT_ID: "6627"
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -194,6 +207,13 @@ In case the Pull-Requests changes code
 that is executed by the CI, check if the code may expose or transmit secrets
 that have been set above.
 If so, the change could be used to gain access to the secret tokens.
+
+### Troubleshoot
+
+When an action (e.g. for mirroring) fails unexpectedly, please double-check
+if the Gitlab-project offers a valid Project-Access-Token
+(see [Preparation](#preparation) for details). If the token is invalid,
+API-calls are rejected (even if API-calls without token succeed).
 
 ## How to contribute to this project supplying the action?
 
