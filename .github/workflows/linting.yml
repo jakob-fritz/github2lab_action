@@ -10,6 +10,9 @@ jobs:
   MarkdownLinting:
     runs-on: ubuntu-latest
     steps:
+    - uses: GitHubSecurityLab/actions-permissions/monitor@v1
+      with:
+        config: ${{ vars.PERMISSIONS_CONFIG }}
     - uses: actions/checkout@v3
     - name: Lint markdown file
       uses: avto-dev/markdown-lint@v1
@@ -18,6 +21,9 @@ jobs:
   ShellCheck:
     runs-on: ubuntu-latest
     steps:
+    - uses: GitHubSecurityLab/actions-permissions/monitor@v1
+      with:
+        config: ${{ vars.PERMISSIONS_CONFIG }}
     - uses: actions/checkout@v3
     - name: Run shellcheck
       uses: ludeeus/action-shellcheck@6d3f514f44620b9d4488e380339edc0d9bbe2fba
@@ -25,6 +31,9 @@ jobs:
     runs-on: ubuntu-latest
     container: alpine:3.17
     steps:
+    - uses: GitHubSecurityLab/actions-permissions/monitor@v1
+      with:
+        config: ${{ vars.PERMISSIONS_CONFIG }}
     - uses: actions/checkout@v3
     - name: Install checkbashisms
       run: 
@@ -35,6 +44,9 @@ jobs:
   PythonLinting:
     runs-on: ubuntu-latest
     steps:
+    - uses: GitHubSecurityLab/actions-permissions/monitor@v1
+      with:
+        config: ${{ vars.PERMISSIONS_CONFIG }}
     - uses: actions/checkout@v3
     - name: Install dependencies using micromamba
       uses: mamba-org/provision-with-micromamba@main
