@@ -29,14 +29,12 @@ jobs:
       uses: ludeeus/action-shellcheck@6d3f514f44620b9d4488e380339edc0d9bbe2fba
   CheckBashisms:
     runs-on: ubuntu-latest
+    container: alpine:3.17
     steps:
-    - uses: GitHubSecurityLab/actions-permissions/monitor@v1
-      with:
-        config: ${{ vars.PERMISSIONS_CONFIG }}
     - uses: actions/checkout@v3
     - name: Install checkbashisms
       run: 
-        sudo apt-get install checkbashisms=2.22.2-r0
+        apk add checkbashisms=2.22.2-r0
     - name: run checkbashisms
       run: 
         checkbashisms *.sh
