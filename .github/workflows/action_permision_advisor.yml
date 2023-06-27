@@ -1,3 +1,9 @@
+# SPDX-FileCopyrightText: 2023 GithubSecurityLab
+#
+# SPDX-License-Identifier: MIT
+
+# For more information see https://github.com/GitHubSecurityLab/actions-permissions
+
 # Sample workflow to run the action
 name: Permissions Advisor
 
