@@ -57,8 +57,24 @@ Steps to be done:
 - Allow Force-Push on remote protected branches in remote repository.
   - This can be found in Gitlab in
     `Settings -> Repository -> Protected branches`
-- Create Project Access Token in GitLab,
-  so that the GitHub-CI can push to GitLab
+- Create an Access Token in GitLab,
+  so that the GitHub-CI can push to GitLab.
+  The Access Token can be a Project Access Token or a Personal Access Token.
+  If Jacamar is used, a Personal Access Token is needed.
+  Otherwise, a Project Access Token is recommended.
+  
+  Creation of a Personal Access Token:
+  - This can be found in Gitlab after clicking on the own user-avatar:
+    `Preferences -> Access Tokens -> Add new token`
+  - Give the token a suited name.
+  - This token needs the necessary permissions:
+    - api (Read & Write)
+    - read_repository
+    - write_repository
+  - Click `Create personal access token`
+  - Copy the generated token to the clipboard
+
+  Creation of a Project Access Token:
   - This can be found in Gitlab in
     `Settings -> Access Tokens -> Project Access Tokens`
   - Give the token a suited name. This name is publicly readable.
@@ -147,7 +163,7 @@ in the jobs. By this, only those jobs can access the variables.
 name: Mirror and get status
   uses: jakob-fritz/github2lab_action@main
   env:
-    MODE: 'all' # Either 'mirror', 'get_status', or 'all'
+    MODE: 'all' # Either 'mirror', 'get_status', 'get_artifact', or 'all'
     GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
     FORCE_PUSH: "true"
     GITLAB_HOSTNAME: "codebase.helmholtz.cloud"
@@ -163,7 +179,7 @@ in Github in between, the following example may be more suited.
 - name: Mirror
   uses: jakob-fritz/github2lab_action@main
   env:
-    MODE: 'mirror' # Either 'mirror', 'get_status', or 'all'
+    MODE: 'mirror' # Either 'mirror', 'get_status', 'get_artifact', or 'all'
     GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
     FORCE_PUSH: "true"
     GITLAB_HOSTNAME: "codebase.helmholtz.cloud"
@@ -178,7 +194,7 @@ in Github in between, the following example may be more suited.
 - name: Get status
   uses: jakob-fritz/github2lab_action@main
   env:
-    MODE: 'get_status' # Either 'mirror', 'get_status', or 'all'
+    MODE: 'get_status' # Either 'mirror', 'get_status', 'get_artifact', or 'all'
     GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
     GITLAB_HOSTNAME: "codebase.helmholtz.cloud"
     GITLAB_PROJECT_ID: "6627"
@@ -186,7 +202,7 @@ in Github in between, the following example may be more suited.
 - name: Get artifacts
   uses: jakob-fritz/github2lab_action@main
   env:
-    MODE: 'get_artifact' # Either 'mirror', 'get_status', or 'all'
+    MODE: 'get_artifact' # Either 'mirror', 'get_status', 'get_artifact', or 'all'
     GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
     GITLAB_HOSTNAME: "codebase.helmholtz.cloud"
     GITLAB_PROJECT_ID: "6627"
