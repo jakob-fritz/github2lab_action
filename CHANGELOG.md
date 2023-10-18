@@ -6,6 +6,11 @@ SPDX-License-Identifier: CC0-1.0
 
 # Changelog
 
+## v0.4
+
+- Added github action permission advisor
+- Updated Readme for usage of this action in combination with Jacamar
+
 ## v0.3
 
 - Added changelog
