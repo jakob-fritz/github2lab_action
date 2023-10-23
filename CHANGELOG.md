@@ -6,6 +6,11 @@ SPDX-License-Identifier: CC0-1.0
 
 # Changelog
 
+## v0.5
+
+- Fixed bug with downloading artifacts
+- More verbose output while mirroring
+
 ## v0.4
 
 - Added github action permission advisor
