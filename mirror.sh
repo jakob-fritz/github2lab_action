@@ -17,7 +17,7 @@ git remote add gitlab "https://TOKENUSER:${GITLAB_TOKEN}@${GITLAB_REPO_URL}"
 # Get current state of local git
 echo "Running git fetch, git checkout, git pull"
 # Get the current state of the single branch from the GitHub-Repo
-sh -c "git fetch --prune --no-tags --force origin ${GITHUB_REF}"
+sh -c "git fetch --prune --no-tags --force origin +${GITHUB_REF}:${GITHUB_REF}"
 sh -c "git checkout ${GITHUB_REF}"
 sh -c "git pull --no-tags --force origin ${GITHUB_REF}"
 echo "git status is:"
