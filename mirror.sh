@@ -18,6 +18,7 @@ git remote add gitlab "https://TOKENUSER:${GITLAB_TOKEN}@${GITLAB_REPO_URL}"
 echo "Running git fetch, git checkout, git pull"
 # Get the current state of the single branch from the GitHub-Repo
 # In case this is a pull-request, add this to fetch
+echo "Event is ${github.event_name}"
 if [ "${github.event_name}" = 'pull_request' ] || [ "${github.event_name}" = 'pull_request_target' ]
   then
     sh -c "git fetch --prune --no-tags --force origin +${GITHUB_REF}:${GITHUB_REF}"
