@@ -11,15 +11,24 @@ set -u -e
 DEFAULT_POLL_TIMEOUT=10
 POLL_TIMEOUT=${POLL_TIMEOUT:-$DEFAULT_POLL_TIMEOUT}
 
-echo "Triggered CI for branch ${GITHUB_REF}"
+if [ "${GITHUB_EVENT_NAME}" = 'pull_request' ] || [ "${GITHUB_EVENT_NAME}" = 'pull_request_target' ]
+  then
+    used_sha=${PR_HEAD_SHA}
+    branch_name=PullRequest_${PR_NUMBER}
+  else
+    used_sha=${GITHUB_SHA}
+    branch_name=${GITHUB_REF}
+fi
+
+echo "Triggered CI for branch ${branch_name}"
 # Get the id of the last pipeline that run for a given commit (GITHUB_SHA)
-pipeline_id=$(curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/repository/commits/${GITHUB_SHA}" | jq '.last_pipeline.id')
+pipeline_id=$(curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/repository/commits/${used_sha}" | jq '.last_pipeline.id')
 
 pipeline_id_attempt=1
 until [ "$pipeline_id" != "null" ]
 do
   sleep "$POLL_TIMEOUT"
-  pipeline_id=$(curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/repository/commits/${GITHUB_SHA}" | jq '.last_pipeline.id')
+  pipeline_id=$(curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/repository/commits/${used_sha}" | jq '.last_pipeline.id')
   pipeline_id_attempt=$((pipeline_id_attempt + 1))
   if [ "$pipeline_id_attempt" -gt "5" ]
   then
@@ -47,7 +56,7 @@ do
    if [ "$ci_status" = "running" ]
    then
      echo "Checking pipeline status..."
-     curl -d '{"state":"pending", "target_url": "'"${ci_web_url}"'", "context": "gitlab-ci"}' -H "Authorization: token ${GITHUB_TOKEN}"  -H "Accept: application/vnd.github+json" -X POST --silent "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}"  > /dev/null
+     curl -d '{"state":"pending", "target_url": "'"${ci_web_url}"'", "context": "gitlab-ci"}' -H "Authorization: token ${GITHUB_TOKEN}"  -H "Accept: application/vnd.github+json" -X POST --silent "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${used_sha}"  > /dev/null
    fi
 done
 # Pipeline is done
@@ -72,11 +81,11 @@ echo "For more details on the Jobs see: ${ci_web_url}"
 # and return that as a return-code (0 for success; 1 for failure)
 if [ "$ci_status" = "success" ]
 then
-  curl -d '{"state":"success", "target_url": "'"${ci_web_url}"'", "context": "gitlab-ci"}' -H "Authorization: token ${GITHUB_TOKEN}"  -H "Accept: application/vnd.github+json" -X POST --silent "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}"  > /dev/null
+  curl -d '{"state":"success", "target_url": "'"${ci_web_url}"'", "context": "gitlab-ci"}' -H "Authorization: token ${GITHUB_TOKEN}"  -H "Accept: application/vnd.github+json" -X POST --silent "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${used_sha}"  > /dev/null
   exit 0
 elif [ "$ci_status" = "failed" ]
 then
-  curl -d '{"state":"failure", "target_url": "'"${ci_web_url}"'", "context": "gitlab-ci"}' -H "Authorization: token ${GITHUB_TOKEN}"  -H "Accept: application/vnd.github+json" -X POST --silent "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}"  > /dev/null
+  curl -d '{"state":"failure", "target_url": "'"${ci_web_url}"'", "context": "gitlab-ci"}' -H "Authorization: token ${GITHUB_TOKEN}"  -H "Accept: application/vnd.github+json" -X POST --silent "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${used_sha}"  > /dev/null
   exit 1
 else
   exit 1

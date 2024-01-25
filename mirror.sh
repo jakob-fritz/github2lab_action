@@ -20,10 +20,10 @@ echo "Running git fetch, git checkout, git pull"
 # In case this is a pull-request, add this to fetch
 if [ "${GITHUB_EVENT_NAME}" = 'pull_request' ] || [ "${GITHUB_EVENT_NAME}" = 'pull_request_target' ]
   then
-    sh -c "git fetch --unshallow --prune --no-tags --force origin +${GITHUB_EVENT_PULL_REQUEST_HEAD_SHA}"
-    sh -c "git checkout ${GITHUB_EVENT_PULL_REQUEST_HEAD_SHA}"
-    sh -c "git branch PullRequest_${GITHUB_EVENT_NUMBER}"
-    sh -c "git checkout PullRequest_${GITHUB_EVENT_NUMBER}"
+    sh -c "git fetch --unshallow --prune --no-tags --force origin +${PR_HEAD_SHA}"
+    sh -c "git checkout ${PR_HEAD_SHA}"
+    sh -c "git branch PullRequest_${PR_NUMBER}"
+    sh -c "git checkout PullRequest_${PR_NUMBER}"
   else
     sh -c "git fetch --unshallow --prune --no-tags --force origin"
     sh -c "git checkout ${GITHUB_REF}"
