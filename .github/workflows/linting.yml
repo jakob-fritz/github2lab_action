@@ -13,7 +13,7 @@ jobs:
     - uses: GitHubSecurityLab/actions-permissions/monitor@v1
       with:
         config: ${{ vars.PERMISSIONS_CONFIG }}
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Lint markdown file
       uses: avto-dev/markdown-lint@v1
       with:
@@ -24,14 +24,14 @@ jobs:
     - uses: GitHubSecurityLab/actions-permissions/monitor@v1
       with:
         config: ${{ vars.PERMISSIONS_CONFIG }}
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Run shellcheck
       uses: ludeeus/action-shellcheck@6d3f514f44620b9d4488e380339edc0d9bbe2fba
   CheckBashisms:
     runs-on: ubuntu-latest
     container: alpine:3.17
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Install checkbashisms
       run: 
         apk add checkbashisms=2.22.2-r0
@@ -44,7 +44,7 @@ jobs:
     - uses: GitHubSecurityLab/actions-permissions/monitor@v1
       with:
         config: ${{ vars.PERMISSIONS_CONFIG }}
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Install dependencies using micromamba
       uses: mamba-org/provision-with-micromamba@main
       with:

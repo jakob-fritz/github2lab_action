@@ -32,7 +32,7 @@ runs:
         PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
       shell: bash
       if: (env.MODE == 'get_artifact') || (env.MODE == 'both') || (env.MODE == 'all')
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         path: ./artifacts/
       if: (env.MODE == 'get_artifact') || (env.MODE == 'both') || (env.MODE == 'all')

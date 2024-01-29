@@ -6,6 +6,11 @@ SPDX-License-Identifier: CC0-1.0
 
 # Changelog
 
+## v0.6
+
+- Fixed issue for mirroring code and querying pipeline-status when triggered by Pull-request
+- Updated to use node20 instead of deprecated node16 (in checkout and upload-artifact action)
+
 ## v0.5
 
 - Fixed bug with downloading artifacts
