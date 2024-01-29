@@ -22,12 +22,15 @@ if [ "${GITHUB_EVENT_NAME}" = 'pull_request' ] || [ "${GITHUB_EVENT_NAME}" = 'pu
   then
     sh -c "git fetch --unshallow --prune --no-tags --force origin +${PR_HEAD_SHA}"
     sh -c "git checkout ${PR_HEAD_SHA}"
-    sh -c "git branch PullRequest_${PR_NUMBER}"
-    sh -c "git checkout PullRequest_${PR_NUMBER}"
+    BRANCHNAME="PullRequest_${PR_NUMBER}"
+    sh -c "git branch $BRANCHNAME"
+    sh -c "git checkout $BRANCHNAME"
+
   else
     sh -c "git fetch --unshallow --prune --no-tags --force origin"
-    sh -c "git checkout ${GITHUB_REF}"
-    sh -c "git pull --no-tags --force origin ${GITHUB_REF}"
+    sh -c "git checkout ${GITHUB_REF_NAME}"
+    sh -c "git pull --no-tags --force origin ${GITHUB_REF_NAME}"
+    BRANCHNAME="${GITHUB_REF_NAME}"
 fi
 
 echo "git status is:"
@@ -38,10 +41,10 @@ if [ "${FORCE_PUSH:-}" = "true" ]; then
   # Force push is used to make sure the gitlab-repo is the same as github
   # If gitlab diverges, all changes from github are mirrored to GitLab
   # even if that overwrites changes
-  sh -c "git push --force gitlab ${GITHUB_REF}"
+  sh -c "git push --force gitlab $BRANCHNAME"
 else
   # If pushing without "force" creates merge-conflicts, the push is aborted
-  sh -c "git push gitlab ${GITHUB_REF}"
+  sh -c "git push gitlab $BRANCHNAME"
 fi
 # Get the return-code of pushing
 ret_code=$?
