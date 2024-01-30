@@ -29,7 +29,7 @@ def get_job_list():
     GITHUB_SHA: The SHA of the last commit that was pushed
     PR_HEAD_SHA: The SHA of the latest commit in a Pull Request
     """
-    if (env['GITHUB_EVENT_NAME'] in ["pull_request", "pull_request_target"]):
+    if env["GITHUB_EVENT_NAME"] in ["pull_request", "pull_request_target"]:
         pipeline_url = (
             f"https://{env['GITLAB_HOSTNAME']}/api/v4/projects/"
             + f"{env['GITLAB_PROJECT_ID']}/repository/commits/{env['PR_HEAD_SHA']}"
