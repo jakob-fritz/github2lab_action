@@ -8,8 +8,14 @@ SPDX-License-Identifier: CC0-1.0
 
 ## v0.6
 
-- Fixed issue for mirroring code and querying pipeline-status when triggered by Pull-request
-- Updated to use node20 instead of deprecated node16 (in checkout and upload-artifact action)
+- Fixed issue for mirroring code and querying pipeline-status
+when triggered by Pull-request
+- Updated to use node20 instead of deprecated node16
+(in checkout and upload-artifact action)
+- Removed the actions-permissions action as it is deprecated
+and was not updated since march 2023
+- Set the needed permission for all actions
+(according to the removed actions-permissions action)
 
 ## v0.5
 
