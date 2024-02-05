@@ -25,8 +25,8 @@ they can be extracted when the code of the CI is adapted accordingly.
 
 Nothing special. Just contribute to the project as you regularly do
 (and as the project requests). When you create a pull-request,
-your contributions are automatically tested in the Gitlab-Repo
-(once the maintainer approved it).
+your contributions can be tested in the Gitlab-Repo
+(once the maintainer approved it). The required setup is explained [below](#how-to-use-with-pull-requests).
 
 ### How to run the Gitlab-CI in a forked repository (prior to the Pull-Request)
 
@@ -213,16 +213,73 @@ For full examples see also the files in `examples/.github/workflows`.
 
 ### How to use with Pull-Requests
 
-When external contributors hand in pull-requests, the CI has to be accepted
-by a maintainer of the project. The `on: pull_request` in the workflow-file
+To use the action in Pull-Requests, some additional setup is needed.
+The reason for this additional setup is that external code cannot access
+a token with write access (for security reasons).
+
+Therefore, a two-step approach should be used.
+The first step is to decide on whether the synchronization shall be executed.
+The second step is the synchronization itself.
+It is recommended to create a new, separate workflow for the action
+to not interfere with any other Github actions in use.
+
+An example for such a workflow can be found in
+`examples/.github/workflows/mirror_pull_request.yml`.
+There, some differences can be seen compared to
+`examples/.github/workflows/mirror_combined.yml`.
+These differences shall be highlighted and explained in the following.
+
+The `on: pull_request` in the workflow-file
 needs to be changed to `on: pull_request_target` so that the CI triggered by
 the pull-request can access the Project-Secrets of the target repository.
 There, the access-tokens are stored, that are needed for execution.
+Aditionally, the workflow shall be executed on push and periodically
+(done by `on: push` and `on: schedule`).
+Furthermore, the whole workflow will only run for pull-requests,
+if the pull-request has a certain label named `gitlab-mirror` (in this example).
+The intention is to avoid numerous runs during the development of pull-requests,
+where this is not necessary.
+It does not serve as a security measure,
+but rather as a switch to enable and disable the mirroring in pull-requests.
 
-In case the Pull-Requests changes code
-that is executed by the CI, check if the code may expose or transmit secrets
-that have been set above.
-If so, the change could be used to gain access to the secret tokens.
+The workflow consists of two jobs. The first `check_permission` simply succeeds
+or fails depending on wether the person who triggered the job has enough permissions.
+For this, the action `check-user-permission` is used.
+It has to be noted, that the permissions are checked for the user
+who triggered the workflow, not for the user who commited the latest code.
+This differs in cases of rerunning the workflow.
+If the person has write permissions to the repository, the access is granted.
+For this reason, all workflows triggered by `push` events are run as well,
+as this event implies a write access to the repository.
+If the job `check_permission` succeeds, another job `mirror_to_gitlab` is run.
+In case of a failing job `check_permission`,
+the second job would not be executed.
+
+The reason for the two-step approach is to avoid automatic execution of code
+in pull-requests, as this could contain malicious code.
+Therefore, the pipeline will fail if an arbitrary user opens a pull-request.
+Only, after a user with write permissions restarts the workflow, it will run.
+It is strongly recommended to check the new code before restarting this workflow.
+
+This second job consists of three steps. The first is to `set proper sha`.
+The second checks out code and the third uses the `github2lab_action`
+developed in this repository.
+
+The first step is needed to always check out the latest commit.
+For pushes and scheduled workflows, this is the the same commit
+as it would be checked out by default. For pull-requests this is different.
+In pull-requests (not pull-request_target) the default commit is a version
+of how a merge would look like. This version is a commit that is automatically
+created for Github-Actions and not available in the Web GUI of Github.
+For pull-request-target the default commit is the latest commit of the branch
+where the fork started. Therefore, no code developed in the fork is accessible.
+This makes sense from a security point of view.
+But as we want to mirror the new code, we need to access it. Therefore,
+the sha of the checkout is set to the latest commit in the pull-request.
+
+A workflow similar to the one described above can be found in the project
+[pySDC](<https://github.com/Parallel-in-Time/pySDC>)
+by the Parallel-in-Time community.
 
 ## Troubleshoot
 

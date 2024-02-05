@@ -16,15 +16,23 @@ runs:
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
     - run: mirror.sh
+      env:
+        PR_NUMBER: ${{ github.event.number }}
+        PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
       shell: bash
       if: (env.MODE == 'mirror') || (env.MODE == 'both') || (env.MODE == 'all')
     - run: get_ci_state.sh
+      env:
+        PR_NUMBER: ${{ github.event.number }}
+        PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
       shell: bash
       if: (env.MODE == 'get_status') || (env.MODE == 'both') || (env.MODE == 'all') 
     - run: get_artifact.py
+      env:
+        PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
       shell: bash
       if: (env.MODE == 'get_artifact') || (env.MODE == 'both') || (env.MODE == 'all')
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         path: ./artifacts/
       if: (env.MODE == 'get_artifact') || (env.MODE == 'both') || (env.MODE == 'all')

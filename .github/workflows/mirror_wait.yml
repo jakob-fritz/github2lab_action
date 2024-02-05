@@ -9,11 +9,10 @@ on: [push, pull_request_target]
 jobs:
   github2lab:
     runs-on: ubuntu-latest
+    permissions:
+      statuses: write
     steps:
-    - uses: GitHubSecurityLab/actions-permissions/monitor@v1
-      with:
-        config: ${{ vars.PERMISSIONS_CONFIG }}
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
     - name: Mirror
       uses: ./
       env:
