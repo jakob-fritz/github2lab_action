@@ -103,7 +103,8 @@ An example for such a file can be found in `examples/.gitlab-ci.yml`.
 
 ### Github-CI
 
-- To use the action, simply include it in your current github workflows.
+- To use the action, simply checkout your code
+and include the action in your current github workflows.
 See [Exemplary use](#examplary-use) below for a snippet on how to include the action.
 Full examples on how to include it can be found in `examples/.github/workflows`.
 - Use `on: pull_request_target` instead of `on: pull_request`. This is
@@ -160,7 +161,9 @@ in the jobs. By this, only those jobs can access the variables.
 ### Examplary use
 
 ``` yaml
-name: Mirror and get status
+- name: Checkout
+  uses: actions/checkout@v4
+- name: Mirror and get status
   uses: jakob-fritz/github2lab_action@main
   env:
     MODE: 'all' # Either 'mirror', 'get_status', 'get_artifact', or 'all'
@@ -176,6 +179,8 @@ to finish. If the two parts shall be split, so that other jobs can be performed
 in Github in between, the following example may be more suited.
 
 ``` yaml
+- name: Checkout
+  uses: actions/checkout@v4
 - name: Mirror
   uses: jakob-fritz/github2lab_action@main
   env:
