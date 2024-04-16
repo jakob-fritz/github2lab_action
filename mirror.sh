@@ -23,8 +23,6 @@ then
   sh -c "git fetch --unshallow --prune --no-tags --force origin"
   sh -c "git checkout ${MIRROR_BRANCH}"
   BRANCHNAME="${MIRROR_BRANCH}"
-  sh -c "git branch $BRANCHNAME"
-  sh -c "git checkout $BRANCHNAME"
 elif [ "${GITHUB_EVENT_NAME}" = 'pull_request' ] || [ "${GITHUB_EVENT_NAME}" = 'pull_request_target' ]
 then
   sh -c "git fetch --unshallow --prune --no-tags --force origin +${PR_HEAD_SHA}"
