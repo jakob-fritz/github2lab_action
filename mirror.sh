@@ -22,7 +22,7 @@ echo "Running git fetch, git checkout, git pull"
 # First unshallow the git repository
 if $(git rev-parse --is-shallow-repository); then
   git fetch --unshallow
-else; then
+else
   git fetch
 fi
 
