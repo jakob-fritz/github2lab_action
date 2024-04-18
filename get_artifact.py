@@ -32,7 +32,7 @@ def get_job_list():
     """
     if os.getenv("MIRROR_BRANCH") not in [None, ""]:
         print(f"Used branch is: {os.getenv('MIRROR_BRANCH')}")
-        used_sha = subprocess.run(f"git rev-parse {os.getenv('MIRROR_BRANCH')}", capture_output=True, text=True).stdout
+        used_sha = subprocess.run(["git", "rev-parse", f"{os.getenv('MIRROR_BRANCH')}"], capture_output=True, text=True).stdout
     elif env["GITHUB_EVENT_NAME"] in ["pull_request", "pull_request_target"]:
         used_sha = env['PR_HEAD_SHA']
     else:
