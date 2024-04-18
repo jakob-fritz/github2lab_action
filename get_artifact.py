@@ -105,20 +105,38 @@ def download_single_artifact(job):
     """
     artifact = get_artifact_info(job)
     job_id = job["id"]
+    job_name = sanitize(job["name"])
     headers = {"PRIVATE-TOKEN": env["GITLAB_TOKEN"]}
     file_url = (
         f"https://{env['GITLAB_HOSTNAME']}/api/v4/projects/"
         + f"{env['GITLAB_PROJECT_ID']}/jobs/{job_id}/artifacts"
     )
-    with open(f"artifacts/{job['name']}.{artifact['file_format']}", "wb") as file:
+    with open(f"artifacts/{job_name}.{artifact['file_format']}", "wb") as file:
         # Get the file (artifact)
         response = requests.get(file_url, headers=headers)
         # Raise an error if the request was unsuccessfull
         response.raise_for_status()
         # Acutally write the content of the response to a file
         file.write(response.content)
-    print(f"Downloaded file from job: {job['name']}.")
+    print(f"Downloaded file from job: {job['name']} as {job_name}.")
 
+
+def sanitize(job_name):
+    # From the output of Github:
+    # Invalid characters include:  Double quote ", Colon :, Less than <, Greater than >, Vertical bar |, Asterisk *, Question mark ?, Carriage return \r, Line feed \n
+    sanitized_name = job_name.strip()
+    sanitized_name = sanitized_name.replace('"','')
+    sanitized_name = sanitized_name.replace(':','')
+    sanitized_name = sanitized_name.replace('<','')
+    sanitized_name = sanitized_name.replace('>','')
+    sanitized_name = sanitized_name.replace('|','')
+    sanitized_name = sanitized_name.replace('*','')
+    sanitized_name = sanitized_name.replace('?','')
+    sanitized_name = sanitized_name.replace('\r','')
+    sanitized_name = sanitized_name.replace('\n','')
+    # Officially not needed, but probably helpfull to exclude spaces
+    sanitized_name = sanitized_name.replace(' ','_')
+    return sanitized_name
 
 if __name__ == "__main__":
     jobs = get_job_list()
