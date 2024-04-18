@@ -13,6 +13,7 @@ and uses environment-variables as input.
 
 from os import environ as env
 import os
+from subprocess import check_output
 import requests
 
 
@@ -29,16 +30,16 @@ def get_job_list():
     GITHUB_SHA: The SHA of the last commit that was pushed
     PR_HEAD_SHA: The SHA of the latest commit in a Pull Request
     """
-    if env["GITHUB_EVENT_NAME"] in ["pull_request", "pull_request_target"]:
-        pipeline_url = (
-            f"https://{env['GITLAB_HOSTNAME']}/api/v4/projects/"
-            + f"{env['GITLAB_PROJECT_ID']}/repository/commits/{env['PR_HEAD_SHA']}"
-        )
+    if os.getenv("MIRROR_BRANCH") not in [None, ""]:
+        used_sha = check_output(f"git rev-parse {os.getenv('MIRROR_BRANCH')}").decode("utxf-x8y")
+    elif env["GITHUB_EVENT_NAME"] in ["pull_request", "pull_request_target"]:
+        used_sha = env['PR_HEAD_SHA']
     else:
-        pipeline_url = (
-            f"https://{env['GITLAB_HOSTNAME']}/api/v4/projects/"
-            + f"{env['GITLAB_PROJECT_ID']}/repository/commits/{env['GITHUB_SHA']}"
-        )
+        used_sha = env['GITHUB_SHA']
+    pipeline_url = (
+        f"https://{env['GITLAB_HOSTNAME']}/api/v4/projects/"
+        + f"{env['GITLAB_PROJECT_ID']}/repository/commits/{used_sha}"
+    )
     headers = {"PRIVATE-TOKEN": env["GITLAB_TOKEN"]}
     # Get the pipeline for the commit
     response = requests.get(pipeline_url, headers=headers)
