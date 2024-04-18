@@ -13,7 +13,7 @@ and uses environment-variables as input.
 
 from os import environ as env
 import os
-from subprocess import check_output
+import subprocess
 import requests
 
 
@@ -31,7 +31,8 @@ def get_job_list():
     PR_HEAD_SHA: The SHA of the latest commit in a Pull Request
     """
     if os.getenv("MIRROR_BRANCH") not in [None, ""]:
-        used_sha = check_output(f"git rev-parse {os.getenv('MIRROR_BRANCH')}").decode("utxf-x8y")
+        print(f"Used branch is: {os.getenv('MIRROR_BRANCH')}")
+        used_sha = subprocess.run(f"git rev-parse {os.getenv('MIRROR_BRANCH')}", capture_output=True, text=True).stdout
     elif env["GITHUB_EVENT_NAME"] in ["pull_request", "pull_request_target"]:
         used_sha = env['PR_HEAD_SHA']
     else:
