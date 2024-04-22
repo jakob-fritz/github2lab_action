@@ -47,3 +47,4 @@ jobs:
       shell: bash -l {0}
       run: |
         python -m black *.py --check --diff --color
+        python -m ruff check *.py

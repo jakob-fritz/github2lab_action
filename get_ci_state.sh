@@ -11,11 +11,15 @@ set -u -e
 DEFAULT_POLL_TIMEOUT=10
 POLL_TIMEOUT=${POLL_TIMEOUT:-$DEFAULT_POLL_TIMEOUT}
 
-if [ "${GITHUB_EVENT_NAME}" = 'pull_request' ] || [ "${GITHUB_EVENT_NAME}" = 'pull_request_target' ]
+if [ -n "${MIRROR_BRANCH:+1}" ]
+  then
+    used_sha=$(git rev-parse "$MIRROR_BRANCH")
+    branch_name=${MIRROR_BRANCH}
+elif [ "${GITHUB_EVENT_NAME}" = 'pull_request' ] || [ "${GITHUB_EVENT_NAME}" = 'pull_request_target' ]
   then
     used_sha=${PR_HEAD_SHA}
     branch_name=PullRequest_${PR_NUMBER}
-  else
+else
     used_sha=${GITHUB_SHA}
     branch_name=${GITHUB_REF}
 fi
