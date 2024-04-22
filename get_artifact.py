@@ -32,13 +32,17 @@ def get_job_list():
     """
     if os.getenv("MIRROR_BRANCH") not in [None, ""]:
         print(f"Used branch is: {os.getenv('MIRROR_BRANCH')}")
-        used_sha = subprocess.run(["git", "rev-parse", f"{os.getenv('MIRROR_BRANCH')}"], capture_output=True, text=True).stdout
+        used_sha = subprocess.run(
+            ["git", "rev-parse", f"{os.getenv('MIRROR_BRANCH')}"],
+            capture_output=True,
+            text=True,
+        ).stdout
         # strip whitespaces (incl. newlines)
         used_sha = used_sha.strip()
     elif env["GITHUB_EVENT_NAME"] in ["pull_request", "pull_request_target"]:
-        used_sha = env['PR_HEAD_SHA']
+        used_sha = env["PR_HEAD_SHA"]
     else:
-        used_sha = env['GITHUB_SHA']
+        used_sha = env["GITHUB_SHA"]
     pipeline_url = (
         f"https://{env['GITLAB_HOSTNAME']}/api/v4/projects/"
         + f"{env['GITLAB_PROJECT_ID']}/repository/commits/{used_sha}"
@@ -125,18 +129,19 @@ def sanitize(job_name):
     # From the output of Github:
     # Invalid characters include:  Double quote ", Colon :, Less than <, Greater than >, Vertical bar |, Asterisk *, Question mark ?, Carriage return \r, Line feed \n
     sanitized_name = job_name.strip()
-    sanitized_name = sanitized_name.replace('"','')
-    sanitized_name = sanitized_name.replace(':','')
-    sanitized_name = sanitized_name.replace('<','')
-    sanitized_name = sanitized_name.replace('>','')
-    sanitized_name = sanitized_name.replace('|','')
-    sanitized_name = sanitized_name.replace('*','')
-    sanitized_name = sanitized_name.replace('?','')
-    sanitized_name = sanitized_name.replace('\r','')
-    sanitized_name = sanitized_name.replace('\n','')
+    sanitized_name = sanitized_name.replace('"', "")
+    sanitized_name = sanitized_name.replace(":", "")
+    sanitized_name = sanitized_name.replace("<", "")
+    sanitized_name = sanitized_name.replace(">", "")
+    sanitized_name = sanitized_name.replace("|", "")
+    sanitized_name = sanitized_name.replace("*", "")
+    sanitized_name = sanitized_name.replace("?", "")
+    sanitized_name = sanitized_name.replace("\r", "")
+    sanitized_name = sanitized_name.replace("\n", "")
     # Officially not needed, but probably helpfull to exclude spaces
-    sanitized_name = sanitized_name.replace(' ','_')
+    sanitized_name = sanitized_name.replace(" ", "_")
     return sanitized_name
+
 
 if __name__ == "__main__":
     jobs = get_job_list()
