@@ -13,7 +13,7 @@ POLL_TIMEOUT=${POLL_TIMEOUT:-$DEFAULT_POLL_TIMEOUT}
 
 if [ -n "${MIRROR_BRANCH:+1}" ]
   then
-    used_sha=$(git rev-parse $MIRROR_BRANCH)
+    used_sha=$(git rev-parse "$MIRROR_BRANCH")
     branch_name=${MIRROR_BRANCH}
 elif [ "${GITHUB_EVENT_NAME}" = 'pull_request' ] || [ "${GITHUB_EVENT_NAME}" = 'pull_request_target' ]
   then
