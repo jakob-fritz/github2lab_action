@@ -6,6 +6,12 @@ SPDX-License-Identifier: CC0-1.0
 
 # Changelog
 
+## 0.7
+
+- Added environment variable to specify which branch shall be mirrored
+- Updated naming scheme for artifacts, as previous one lead to issues when used in combination with parallel-matrix in Gitlab
+- Added Ruff as linter
+
 ## v0.6
 
 - Fixed issue for mirroring code and querying pipeline-status
