@@ -9,3 +9,4 @@ channels:
   - defaults
 dependencies:
   - black
+  - ruff
