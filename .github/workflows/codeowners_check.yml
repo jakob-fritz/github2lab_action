@@ -26,4 +26,4 @@ jobs:
         uses: github/cleanowners@v1
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          ORGANIZATION: jakob-fritz
+          REPOSITORY: jakob-fritz/github2lab_action
