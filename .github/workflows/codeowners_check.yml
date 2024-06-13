@@ -6,7 +6,7 @@
 
 # Sample workflow to run the action
 ---
-name: Weekly codeowners cleanup
+name: Monthly codeowners cleanup
 on:
   workflow_dispatch:
   schedule:
