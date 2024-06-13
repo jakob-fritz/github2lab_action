@@ -8,6 +8,7 @@
 ---
 name: Monthly codeowners cleanup
 on:
+  push:
   workflow_dispatch:
   schedule:
     - cron: '3 2 1 * *'
