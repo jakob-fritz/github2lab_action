@@ -1,0 +1,28 @@
+# SPDX-FileCopyrightText: 2024 Github
+#
+# SPDX-License-Identifier: MIT
+
+# For more information see https://github.com/github/cleanowners
+
+# Sample workflow to run the action
+---
+name: Weekly codeowners cleanup
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '3 2 1 * *'
+
+permissions:
+  issues: write
+
+jobs:
+  cleanowners:
+    name: cleanowners
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run cleanowners action
+        uses: github/cleanowners@v1
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          ORGANIZATION: jakob-fritz
