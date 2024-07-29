@@ -53,10 +53,10 @@ if [ "${FORCE_PUSH:-}" = "true" ]; then
   # Force push is used to make sure the gitlab-repo is the same as github
   # If gitlab diverges, all changes from github are mirrored to GitLab
   # even if that overwrites changes
-  push_output=$(sh -c "git push --force gitlab $BRANCHNAME")
+  push_output=$(git push --force gitlab "$BRANCHNAME")
 else
   # If pushing without "force" creates merge-conflicts, the push is aborted
-  push_output=$(sh -c "git push gitlab $BRANCHNAME")
+  push_output=$(git push gitlab "$BRANCHNAME")
 fi
 # Get the return-code of pushing
 ret_code=$?
