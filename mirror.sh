@@ -62,7 +62,7 @@ fi
 ret_code=$?
 echo "$push_output"
 
-if [ "$push_output" = "Everything up-to-date" ] ; then
+if echo "$push_output" | grep "Everything up-to-date" ; then
   echo "No changes occured, so no need to push again; triggering Pipeline instead."
   post_reply=$(curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent --request POST -d "ref=$BRANCHNAME" "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/pipeline")
   web_url=$(echo "$post_reply" | jq '.web_url')
