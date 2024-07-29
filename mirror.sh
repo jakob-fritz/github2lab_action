@@ -46,28 +46,30 @@ else
 fi
 
 echo "git status is:"
-git_status=$(git status)
-echo "$git_status"
-if [[ $git_status == *"nothing to commit"* ]]; then
-  echo "No changes occured, so no need to push again; triggering Pipeline instead."
-  post_reply=$(curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent --request POST -d "ref=$BRANCHNAME" "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/pipeline")
-  web_url=$(echo "$post_reply" | jq '.web_url')
-  echo "Triggered pipeline can be found here: $web_url"
-  exit $ret_code
-fi 
+git status
 echo "Pushing to new gitlab remote"
 # Push the current state of the repo to GitLab
 if [ "${FORCE_PUSH:-}" = "true" ]; then
   # Force push is used to make sure the gitlab-repo is the same as github
   # If gitlab diverges, all changes from github are mirrored to GitLab
   # even if that overwrites changes
-  sh -c "git push --force gitlab $BRANCHNAME"
+  push_output=$(sh -c "git push --force gitlab $BRANCHNAME")
 else
   # If pushing without "force" creates merge-conflicts, the push is aborted
-  sh -c "git push gitlab $BRANCHNAME"
+  push_output=$(sh -c "git push gitlab $BRANCHNAME")
 fi
 # Get the return-code of pushing
 ret_code=$?
+echo "$push_output"
+
+if [ "$push_output" = "Everything up-to-date" ] ; then
+  echo "No changes occured, so no need to push again; triggering Pipeline instead."
+  post_reply=$(curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent --request POST -d "ref=$BRANCHNAME" "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/pipeline")
+  web_url=$(echo "$post_reply" | jq '.web_url')
+  echo "Triggered pipeline can be found here: $web_url"
+  exit $ret_code
+fi 
+
 if [ $ret_code = 0 ]; then
   # Report, that pushing is done and add newline afterwards for formatting
   echo "Done pushing git-repo to https://${GITLAB_REPO_URL}"
