@@ -56,16 +56,14 @@ if [ "${FORCE_PUSH:-}" = "true" ]; then
   git push --force gitlab "$BRANCHNAME" 1>push_stdout 2>push_stderr
 else
   # If pushing without "force" creates merge-conflicts, the push is aborted
-  git push gitlab "$BRANCHNAME" 1>push_stdout 2>push_stderr
+  git push gitlab "$BRANCHNAME" >push_out 2>&1
 fi
 # Get the return-code of pushing
 ret_code=$?
-push_stdout_var=$(cat push_stdout)
-push_stderr_var=$(cat push_stderr)
-echo "Push output was -$push_stdout_var-"
-echo "Push err was -$push_stderr_var-"
+push_out_var=$(cat push_out)
+echo "$push_out_var"
 
-if cat push_stdout | grep "Everything up-to-date" ; then
+if grep "Everything up-to-date" < push_out ; then
   echo "No changes occured, so no need to push again; triggering Pipeline instead."
   post_reply=$(curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent --request POST -d "ref=$BRANCHNAME" "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/pipeline")
   web_url=$(echo "$post_reply" | jq '.web_url')
