@@ -46,7 +46,15 @@ else
 fi
 
 echo "git status is:"
-git status
+git_status=$(git status)
+echo "$git_status"
+if [[ $git_status == *"nothing to commit"* ]]; then
+  echo "No changes occured, so no need to push again; triggering Pipeline instead."
+  post_reply=$(curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent --request POST -d "ref=$BRANCHNAME" "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/pipeline")
+  web_url=$(echo "$post_reply" | jq '.web_url')
+  echo "Triggered pipeline can be found here: $web_url"
+  exit $ret_code
+fi 
 echo "Pushing to new gitlab remote"
 # Push the current state of the repo to GitLab
 if [ "${FORCE_PUSH:-}" = "true" ]; then
