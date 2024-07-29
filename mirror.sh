@@ -53,16 +53,19 @@ if [ "${FORCE_PUSH:-}" = "true" ]; then
   # Force push is used to make sure the gitlab-repo is the same as github
   # If gitlab diverges, all changes from github are mirrored to GitLab
   # even if that overwrites changes
-  push_output=$(git push --force gitlab "$BRANCHNAME")
+  git push --force gitlab "$BRANCHNAME" 1>push_stdout 2>push_stderr
 else
   # If pushing without "force" creates merge-conflicts, the push is aborted
-  push_output=$(git push gitlab "$BRANCHNAME")
+  git push gitlab "$BRANCHNAME" 1>push_stdout 2>push_stderr
 fi
 # Get the return-code of pushing
 ret_code=$?
-echo "Push output was -$push_output-"
+push_stdout_var=$(cat push_stdout)
+push_stderr_var=$(cat push_stderr)
+echo "Push output was -$push_stdout_var-"
+echo "Push err was -$push_stderr_var-"
 
-if echo "$push_output" | grep "Everything up-to-date" ; then
+if cat push_stdout | grep "Everything up-to-date" ; then
   echo "No changes occured, so no need to push again; triggering Pipeline instead."
   post_reply=$(curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent --request POST -d "ref=$BRANCHNAME" "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/pipeline")
   web_url=$(echo "$post_reply" | jq '.web_url')
