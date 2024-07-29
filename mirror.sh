@@ -60,7 +60,7 @@ else
 fi
 # Get the return-code of pushing
 ret_code=$?
-echo "$push_output"
+echo "Push output was -$push_output-"
 
 if echo "$push_output" | grep "Everything up-to-date" ; then
   echo "No changes occured, so no need to push again; triggering Pipeline instead."
