@@ -105,7 +105,8 @@ An example for such a file can be found in `examples/.gitlab-ci.yml`.
 
 - To use the action, simply check out your code
 and include the action in your current GitHub workflows.
-See [Example of key YAML components](#example-of-key-yaml-components) below for a snippet on how to include the action.
+See [Example of key YAML components](#example-of-key-yaml-components)
+below for a snippet on how to include the action.
 Full examples on how to include it can be found in `examples/.github/workflows`.
 - Use `on: pull_request_target` instead of `on: pull_request`. This is
 needed so that the CI triggered by the pull-request can access secrets from
