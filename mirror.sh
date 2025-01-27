@@ -9,6 +9,10 @@ set -u -e
 # Get the URL of the repo
 echo "Getting the URL of the repo"
 GITLAB_REPO_URL=$(curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --silent "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}" | jq '.http_url_to_repo' | sed -e 's/http:\/\///' -e 's/https:\/\///' -e 's/"//g')
+if [ -z "$GITLAB_REPO_URL" ]; then
+  echo "URL of Gitlab repository not found. Is 'GITLAB_TOKEN', 'GITLAB_HOSTNAME', and 'GITLAB_PROJECT_ID' set and valid?"
+  exit 1
+fi
 echo "URL is https://${GITLAB_REPO_URL}"
 
 # Add the remote Gitlab-Repo to the local git

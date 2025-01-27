@@ -15,6 +15,8 @@ will only end after the GitLab CI pipeline finished.
 Depending on the duration of the GitLab CI pipeline, the second part
 (waiting for the GitLab CI pipeline) may take some time waiting.
 
+![Structure of the Github2Lab action: The code is pushed, then a GH runner takes care of pushing and reporting](structure_image/structure_line.png)
+
 This whole approach also works for pull-requests.
 Then, the credentials of the maintainer are used.
 These are stored in GitHub-Secrets.

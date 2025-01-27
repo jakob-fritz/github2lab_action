@@ -1,0 +1,33 @@
+% SPDX-FileCopyrightText: 2025 Jakob Fritz <j.fritz@fz-juelich.de>
+% 
+% SPDX-License-Identifier: MIT
+
+\tikzstyle{GHGLarrow}=[line width=0.07em, -triangle 60]
+
+\begin{tikzpicture}
+	
+	\node (localhost) {\Huge \faLaptopCode};
+	
+	\node [right=4em of localhost] (GH_Server) {\Huge \faServer};
+	\node [above=0em of GH_Server] (GH_Symbol) {\large \faGithub};
+
+    \node [right=4em of GH_Server, yshift=-3em] (GH_Runner) {\LARGE \faPersonRunning};
+    \node [above=0em of GH_Runner] (GH_Runnerlogo) {\large \faGithub};
+
+    \node [below=2em of GH_Server] (GL_Symbol) {\large \faGitlab};	
+	\node [below=0em of GL_Symbol] (GL_Server) {\Huge \faServer};
+	
+	\node [left=4em of GL_Server, align=left] (GL_Runner) {\LARGE \faPersonRunning \faPersonRunning \\ \LARGE \faPersonRunning \faPersonRunning};
+	\node [above=0em of GL_Runner] (GL_Runnerlogo) {\large \faGitlab};
+	
+	\draw[GHGLarrow] (localhost) -- node [midway,above] {push} (GH_Server);
+	
+	\draw[GHGLarrow] ([xshift=0.5em]GH_Server.east) -- node [midway,sloped,above] {start} ([xshift=0.5em]GH_Runner.west);
+	\draw[GHGLarrow] ([xshift=-0.5em]GH_Runner.west) -- node [midway,sloped,below] {report} ([xshift=-0.5em]GH_Server.east);
+    \draw[GHGLarrow] ([xshift=0.5em]GH_Runner.south) -- node [midway,sloped,below] {push} ([xshift=0.5em]GL_Server.east);
+    \draw[GHGLarrow] ([xshift=-0.5em]GH_Runner.south) -- node [midway,sloped,above] {poll state} ([xshift=-0.5em]GL_Server.east);
+	
+	\draw[GHGLarrow] ([yshift=0.5em]GL_Server.west) -- node [midway,above] {start} ([yshift=0.5em]GL_Runner.east);
+	\draw[GHGLarrow] ([yshift=-0.5em]GL_Runner.east) -- node [midway,below] {result} ([yshift=-0.5em]GL_Server.west);
+		
+\end{tikzpicture}
