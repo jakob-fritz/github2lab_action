@@ -15,7 +15,7 @@ early exit without printing the error-message from the child process
 ## 0.8.1
 
 - Added image of workflow to README
-- Added check of Gitlab-URL to early exit issues with empty URLs
+- Added check of Gitlab-URL to exit early when having empty URLs
 
 ## 0.8
 
