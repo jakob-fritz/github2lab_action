@@ -10,6 +10,12 @@ SPDX-License-Identifier: CC0-1.0
 
 - Removed `-e` flag when executing shell-scripts, as this leads to
 early exit without printing the error-message from the child process
+(Thank you to "sk1p" (Alexander Clausen) for pointing me to this; see #42)
+
+## 0.8.1
+
+- Added image of workflow to README
+- Added check of Gitlab-URL to early exit issues with empty URLs
 
 ## 0.8
 
