@@ -4,7 +4,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-set -u -e
+set -u
 
 # Set a default waiting-time in seconds between queries,
 # if the pipeline finished
