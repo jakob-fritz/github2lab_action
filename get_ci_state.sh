@@ -4,7 +4,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-set -u -e
+set -u
 
 # Set a default waiting-time in seconds between queries,
 # if the pipeline finished
@@ -46,7 +46,7 @@ echo "Poll timeout set to ${POLL_TIMEOUT} s"
 ci_status="pending"
 
 # Repeat until the pipeline is neither pending nor running
-until [ "$ci_status" != "pending" ] && [ "$ci_status" != "running" ]
+until [ "$ci_status" != "created" ] && [ "$ci_status" != "preparing" ] && [ "$ci_status" != "pending" ] && [ "$ci_status" != "running" ]
 do
   # Wait some seconds
    sleep "$POLL_TIMEOUT"
