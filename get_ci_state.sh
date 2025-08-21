@@ -36,6 +36,7 @@ do
   pipeline_id_attempt=$((pipeline_id_attempt + 1))
   if [ "$pipeline_id_attempt" -gt "5" ]
   then
+    echo "Failed to fetch pipeline id for ${used_sha}"
     exit 1
   fi
 done
